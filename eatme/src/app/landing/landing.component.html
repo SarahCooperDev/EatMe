@@ -1,0 +1,31 @@
+<p style="text-align: center">
+  landing works!
+</p>
+
+<button (click)="onLogin()">Login</button>
+<button (click)="onSignup()">Signup</button>
+
+<div *ngIf="login" id="signin" style="padding-left: 15%">
+  <!-- TODO: table form to submit -->
+  <h3 style="text-align: left">Sign in</h3>
+  <p><label>Username: </label><input type="text"></p>
+  <p><label>Password: </label><input type="password"></p>
+  <a routerLink="/dashboard">GO</a>
+</div>
+
+<div *ngIf="signup" id="signup" style="padding-right: 15%">
+  <form>
+    <!-- TODO: table instead of list!! -->
+    <ul style="list-style: none">
+      <h3>Sign Up</h3>
+      <li><input type="text" placeholder="name"></li>
+      <li><input type="password" placeholder="password"></li>
+      <li><input type="email" placeholder="email"></li>
+      <li><a routerLink="/dashboard">GO</a></li>
+    </ul>
+  </form>
+</div>
+
+<div>
+  <router-outlet></router-outlet>
+</div>
