@@ -1,3 +1,30 @@
 <p>
   auth works!
 </p>
+
+<div *ngIf="!register" id="signin" style="padding-left: 15%">
+  <form>
+      <ul style="list-style: none">
+          <li><h3 style="text-align: left">Sign in</h3></li>
+          <li><p><label>Username: </label><input type="text"></p></li>
+          <li><p><label>Password: </label><input type="password"></p></li>
+          <li><a routerLink="/dashboard">GO</a></li>
+          <li><p (click)="toggleRegister()">Not a user? Click to register!</p></li>
+      </ul>
+  </form>
+  <!-- TODO: table form to submit -->
+</div>
+
+<div *ngIf="register" id="signup" style="padding-left: 15%">
+  <form>
+    <!-- TODO: table instead of list!! -->
+    <ul style="list-style: none">
+      <h3>Sign Up</h3>
+      <li><p><label>Username: </label><input type="text" placeholder="name"></p></li>
+      <li><p><label>Password: </label><input type="password" placeholder="password"></p></li>
+      <li><p><label>Email: </label><input type="email" placeholder="email"></p></li>
+      <li><a routerLink="/dashboard">GO</a></li>
+      <li><p (click)="toggleRegister()">Already a user? Click to sign in!</p></li>
+    </ul>
+  </form>
+</div>

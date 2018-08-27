@@ -1,8 +1,15 @@
 <!--The content below is only a placeholder and can be replaced.-->
+<html>
+<head><title>Eat Me</title></head>
+<body>
 <div style="text-align:center">
   <h1>
-    {{ title }}!
+    Welcome to our website: {{ title }}!
   </h1>
-  <router-outlet></router-outlet>
 </div>
-
+<!--<div id="landingDiv" *ngIf="checkURL()">
+  <app-landing></app-landing>
+</div>-->
+<router-outlet></router-outlet>
+</body>
+</html>

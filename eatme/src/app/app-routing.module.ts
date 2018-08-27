@@ -1,22 +1,17 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthComponent } from './auth/auth.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import {LandingComponent} from './landing/landing.component';
+import {AppComponent} from './app.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {AuthComponent} from './auth/auth.component';
 
 const routes: Routes = [
   { path: 'auth', component: AuthComponent },
-  { path: 'dashboard', component: DashboardComponent}
-]
-
+  {path: 'landing', component: LandingComponent},
+  {path: 'dashboard', component: DashboardComponent},
+];
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule.forRoot(routes),
-  ],
-  declarations: [],
-  exports: [
-    RouterModule
-  ]
+  exports: [ RouterModule ],
+  imports: [ RouterModule.forRoot(routes) ],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
