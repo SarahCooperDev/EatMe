@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { User } from '../models/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -9,10 +10,12 @@ import { User } from '../models/user';
 })
 export class AuthComponent implements OnInit {
   register = false;
+  @Input() user: User;
 
-  constructor(private authService: AuthService ) { }
+  constructor(private authService: AuthService, private router: Router ) { }
 
   ngOnInit() {
+    this.user = new User();
   }
 
   toggleRegister(){
@@ -31,7 +34,8 @@ export class AuthComponent implements OnInit {
     user.dateJoined = new Date();
     user.country = "Britain";
 
-    this.authService.registerUser(user);
+    this.authService.registerUser(this.user);
+    this.router.navigateByUrl('/dashboard');
   }
 
 }
