@@ -1,24 +1,51 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-landing',
-  templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.css']
+  templateUrl: './auth.component.html',
+  styleUrls: ['./auth.component.css']
 })
-export class LandingComponent implements OnInit {
+export class AuthComponent implements OnInit {
   login = false;
   signup = false;
-  constructor() { }
+  dashShowing = true;
+
+  constructor(private router: Router) {
+    console.log("CONSTRUCTOR");
+    if(this.router.url == '/dashboard'){
+      console.log("DASH IF ON");
+    }
+  }
 
   ngOnInit() {
+    console.log("URL: " + this.router.url);
+
   }
   onLogin(): void {
-    this.login = true;
-    this.signup = false;
+    if(this.router.url == "/dashboard"){
+      console.log("WORKS");
+    }
+    else {
+      this.login = true;
+      this.signup = false;
+    }
   }
   onSignup(): void {
-    this.signup = true;
-    this.login = false;
+    if(this.router.url == "/dashboard"){
+      console.log("WORKS");
+    }
+    else {
+      this.signup = true;
+      this.login = false;
+    }
+  }
+  justDash(): void {
+    if(this.router.url == "/dashboard"){
+      this.login = false;
+      this.signup = false;
+      this.dashShowing = false;
+    }
   }
 
 }

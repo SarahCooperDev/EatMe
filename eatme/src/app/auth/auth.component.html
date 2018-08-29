@@ -1,29 +1,45 @@
-<p style="text-align: center">
-  landing works!
-</p>
-
-<button (click)="onLogin()">Login</button>
-<button (click)="onSignup()">Signup</button>
-
-<div *ngIf="login" id="signin" style="padding-left: 15%">
-  <!-- TODO: table form to submit -->
-  <h3 style="text-align: left">Sign in</h3>
-  <p><label>Username: </label><input type="text"></p>
-  <p><label>Password: </label><input type="password"></p>
-  <a routerLink="/dashboard">GO</a>
+<div *ngIf="dashShowing">
+<div>
+  <button (click)="onLogin()">Login</button>
+  <button (click)="onSignup()">Signup</button>
 </div>
 
-<div *ngIf="signup" id="signup" style="padding-right: 15%">
-  <form>
-    <!-- TODO: table instead of list!! -->
-    <ul style="list-style: none">
-      <h3>Sign Up</h3>
-      <li><input type="text" placeholder="name"></li>
-      <li><input type="password" placeholder="password"></li>
-      <li><input type="email" placeholder="email"></li>
-      <li><a routerLink="/dashboard">GO</a></li>
-    </ul>
-  </form>
+<div *ngIf="login && dashShowing" id="signin" style="padding-left: 15%">
+  <h3>Sign In</h3>
+  <table>
+    <tr>
+      <td>Username: </td><td><input type="text"></td>
+    </tr>
+    <tr>
+      <td>Password: </td><td><input type="password"></td>
+    </tr>
+    <tr>
+      <a routerLink="/dashboard" (click)="justDash()">GO</a>
+    </tr>
+
+  </table>
+</div>
+
+<div *ngIf="signup && dashShowing" id="signup" style="padding-left: 15%">
+  <h3>Sign Up</h3>
+  <table>
+    <tr>
+      <td>Name:</td>
+      <td><input type="text" placeholder="name"></td>
+    </tr>
+      <tr>
+        <td>Password: </td>
+        <td><input type="password" placeholder="password"></td>
+      </tr>
+      <tr>
+        <td>Email: </td>
+        <td><input type="email" placeholder="email"></td>
+      </tr>
+      <tr>
+        <td><a routerLink="/dashboard" (click)="justDash()">GO</a></td>
+      </tr>
+  </table>
+</div>
 </div>
 
 <div>
