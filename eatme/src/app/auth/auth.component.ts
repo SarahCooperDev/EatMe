@@ -1,51 +1,41 @@
-import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
+import { Component, OnInit, Input } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { User } from '../models/user';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-landing',
+  selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
-  login = false;
-  signup = false;
-  dashShowing = true;
 
-  constructor(private router: Router) {
-    console.log("CONSTRUCTOR");
-    if(this.router.url == '/dashboard'){
-      console.log("DASH IF ON");
-    }
-  }
+  register = false;
+  @Input() user: User;
+
+  constructor(private authService: AuthService, private router: Router ) { }
 
   ngOnInit() {
-    console.log("URL: " + this.router.url);
+    this.user = new User();
+  }
 
-  }
-  onLogin(): void {
-    if(this.router.url == "/dashboard"){
-      console.log("WORKS");
-    }
-    else {
-      this.login = true;
-      this.signup = false;
-    }
-  }
-  onSignup(): void {
-    if(this.router.url == "/dashboard"){
-      console.log("WORKS");
-    }
-    else {
-      this.signup = true;
-      this.login = false;
-    }
-  }
-  justDash(): void {
-    if(this.router.url == "/dashboard"){
-      this.login = false;
-      this.signup = false;
-      this.dashShowing = false;
+  toggleRegister(){
+    if(this.register == true){
+      this.register = false;
+    } else {
+      this.register = true;
     }
   }
 
+  registerUser(){
+    var user = new User();
+    user.email = "tracer@overwatch";
+    user.password = "tracer";
+    user.username = "tracer";
+    user.dateJoined = new Date();
+    user.country = "Britain";
+
+    this.authService.registerUser(this.user);
+    this.router.navigateByUrl('/dashboard');
+  }
 }

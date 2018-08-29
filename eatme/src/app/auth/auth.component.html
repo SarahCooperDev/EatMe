@@ -1,47 +1,44 @@
-<div *ngIf="dashShowing">
-<div>
-  <button (click)="onLogin()">Login</button>
-  <button (click)="onSignup()">Signup</button>
-</div>
 
-<div *ngIf="login && dashShowing" id="signin" style="padding-left: 15%">
-  <h3>Sign In</h3>
-  <table>
-    <tr>
-      <td>Username: </td><td><input type="text"></td>
-    </tr>
-    <tr>
-      <td>Password: </td><td><input type="password"></td>
-    </tr>
-    <tr>
-      <a routerLink="/dashboard" (click)="justDash()">GO</a>
-    </tr>
+  <div *ngIf="!register" id="signin" style="padding-left: 15%">
+    <h3>Sign In</h3>
+    <form>
+      <table>
+        <tr>
+          <td><label>Username: </label></td><td><input [(ngModel)]="user.username" name="inName" placeholder="name" type="text"></td>
+        </tr>
+        <tr>
+          <td><label>Password: </label></td><td><input [(ngModel)]="user.password" name="inPassword" type="password"></td>
+        </tr>
+        <tr>
+          <td><button (click)="registerUser()">GO</button></td>
+        </tr>
+        <tr>
+          <p (click)="toggleRegister()">Not a user? Click to register!</p>
+        </tr>
+      </table>
+    </form>
+  </div>
 
-  </table>
-</div>
-
-<div *ngIf="signup && dashShowing" id="signup" style="padding-left: 15%">
-  <h3>Sign Up</h3>
-  <table>
-    <tr>
-      <td>Name:</td>
-      <td><input type="text" placeholder="name"></td>
-    </tr>
+  <div *ngIf="register" id="signup" style="padding-left: 15%">
+    <h3>Sign Up</h3>
+    <form>
+    <table>
       <tr>
-        <td>Password: </td>
-        <td><input type="password" placeholder="password"></td>
+        <td><label>Username: </label></td><td><input [(ngModel)]="user.username" name="inName" placeholder="name" type="text"></td>
       </tr>
       <tr>
-        <td>Email: </td>
-        <td><input type="email" placeholder="email"></td>
+        <td><label>Password: </label></td><td><input [(ngModel)]="user.password" name="inPassword" type="password"></td>
       </tr>
       <tr>
-        <td><a routerLink="/dashboard" (click)="justDash()">GO</a></td>
+        <td><button (click)="registerUser()">GO</button></td>
       </tr>
-  </table>
-</div>
-</div>
+      <tr>
+        <p (click)="toggleRegister()">Already a user? Click to sign in!</p>
+      </tr>
+    </table>
+    </form>
+  </div>
 
-<div>
-  <router-outlet></router-outlet>
-</div>
+<!--<div>-->
+  <!--<router-outlet></router-outlet>-->
+<!--</div>-->

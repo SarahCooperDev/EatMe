@@ -7,9 +7,10 @@
     Welcome to our website: {{ title }}!
   </h1>
 </div>
-<div id="landingDiv" *ngIf="checkURL()">
+<!--<div id="landingDiv" *ngIf="checkURL()">
   <app-landing></app-landing>
-</div>
+</div>-->
+<app-auth></app-auth>
 <router-outlet></router-outlet>
 </body>
 </html>
