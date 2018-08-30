@@ -9,6 +9,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ListComponent } from './list/list.component';
 import { PlaceDetailComponent } from './place-detail/place-detail.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatGridListModule} from '@angular/material/grid-list';
+
 
 @NgModule({
   declarations: [
@@ -24,6 +27,11 @@ import { PlaceDetailComponent } from './place-detail/place-detail.component';
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    BrowserAnimationsModule,
+    MatGridListModule,
+  ],
+  exports: [
+    MatGridListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
