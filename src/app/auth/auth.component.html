@@ -29,7 +29,13 @@
         <td><label>Username: </label></td><td><input [(ngModel)]="user.username" name="inName" placeholder="name" type="text"></td>
       </tr>
       <tr>
+        <td><label>Email: </label></td><td><input [(ngModel)]="user.email" name="inEmail" type="text" placeholder="email"></td>
+      </tr>
+      <tr>
         <td><label>Password: </label></td><td><input [(ngModel)]="user.password" name="inPassword" type="password"></td>
+      </tr>
+      <tr>
+        <td><label>Country: </label></td><td><input [(ngModel)]="user.country" name="inCountry" type="text" placeholder="country"></td>
       </tr>
       <tr>
         <td><button (click)="registerUser()">GO</button></td>
