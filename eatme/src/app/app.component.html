@@ -6,11 +6,13 @@
   <h1>
     Welcome to our website: {{ title }}!
   </h1>
+  <button (click)="checkURL()">CHECK URL</button>
 </div>
-<!--<div id="landingDiv" *ngIf="checkURL()">
-  <app-landing></app-landing>
-</div>-->
-<app-auth></app-auth>
+<div id="nav">
+  <button routerLink="/auth">Sign In </button>
+  <button routerLink="/dashboard">Dashboard</button>
+  <button routerLink="/list">My List</button>
+</div>
 <router-outlet></router-outlet>
 </body>
 </html>

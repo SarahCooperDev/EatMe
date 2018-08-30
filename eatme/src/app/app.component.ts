@@ -8,10 +8,12 @@ import {Router} from '@angular/router';
 })
 export class AppComponent {
   title = 'EatMe';
-  landed = false;
 
   constructor(private router: Router) {
+    this.checkURL();
+    this.router.navigate(["/auth"]);
   }
+
   checkURL(): boolean {
     console.log('hello: ' + this.router.url);
     return true;

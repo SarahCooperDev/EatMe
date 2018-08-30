@@ -6,12 +6,18 @@ import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { SettingsComponent } from './settings/settings.component';
+import { ListComponent } from './list/list.component';
+import { PlaceDetailComponent } from './place-detail/place-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
     DashboardComponent,
+    SettingsComponent,
+    ListComponent,
+    PlaceDetailComponent,
   ],
   imports: [
     BrowserModule,
