@@ -9,16 +9,24 @@ import { Router } from '@angular/router';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
-
+  // Indicates whether the user is registering or signing in
   register = false;
+
+  // User object, databound to the input fields
   @Input() user: User;
 
   constructor(private authService: AuthService, private router: Router ) { }
 
+  /*
+   * Instantiates a new user object when the component is launched
+   */
   ngOnInit() {
     this.user = new User();
   }
 
+  /*
+   *  Switches the render between registering and logging in
+   */
   toggleRegister(){
     if(this.register == true){
       this.register = false;
@@ -27,14 +35,12 @@ export class AuthComponent implements OnInit {
     }
   }
 
+  /*
+   *  Called by click, calls the service to register the user through
+   *  the server API
+   */
   registerUser(){
-    var user = new User();
-    user.email = "tracer@overwatch";
-    user.password = "tracer";
-    user.username = "tracer";
-    user.dateJoined = new Date();
-    user.country = "Britain";
-
+    this.user.dateJoined = new Date();
     this.authService.registerUser(this.user);
     this.router.navigateByUrl('/dashboard');
   }

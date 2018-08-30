@@ -20,19 +20,28 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(function(req, res, next){
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');    
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');    
-    //res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');      
     res.setHeader('Access-Control-Allow-Headers', "Access-Control-Allow-Headers,Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,authorization,rbr");
     res.setHeader('Access-Control-Allow-Credentials', true);       
     next();
 });
 
+// Set the user schema for mongodb
 var model = User;
 
+/*
+ * Creates and updates a users data in the database
+ * 
+ * @params
+ * '' - url of the route
+ * function - callback for route, containing the request and response of the call
+ */
 app.post('/api/saveuser', function(req, res){
     console.log("Request");
     console.log(req);
     var mod = new model(req.body.user);
     console.log(req.body.mode);
+    
+    // If individual is a new user, create a new user in database, else
     if(req.body.mode == "SAVE"){
         console.log("In Save");
         mod.save(function(err, data){
@@ -56,6 +65,13 @@ app.post('/api/saveuser', function(req, res){
     }
 });
 
+/*
+ * Deletes a user from the database
+ * 
+ * @params
+ * '' - url of the route
+ * function - callback for route, containing the request and response of the call
+ */
 app.post("/api/deleteUser", function(req, res){
     model.remove({_id: req.body.id}, function(err){
         if(err){
@@ -66,6 +82,13 @@ app.post("/api/deleteUser", function(req, res){
     })
 });
 
+/*
+ * Retrieves all users from the database
+ * 
+ * @params
+ * '' - url of the route
+ * function - callback for route, containing the request and response of the call
+ */
 app.get("/api/getUser", function(req, res){
     console.log("getting users");
     model.find({}, function(err, data){

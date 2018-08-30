@@ -1,3 +1,8 @@
+/*
+ * Provides the front end components with the methods to access the 
+ * authentication api
+ */
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../models/user';
@@ -8,37 +13,42 @@ import { CATCH_ERROR_VAR } from '../../../node_modules/@angular/compiler/src/out
   providedIn: 'root'
 })
 export class AuthService {
+  // url of the api to create or update a user
+  saveuserURL = 'http://localhost:8080/api/saveuser';
 
-  constructor(private http: HttpClient) {
-    
-   }
+  // Outlines the request header options
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'my-auth-token',
+      'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With',
+    })
+  };
 
+  constructor(private http: HttpClient) {}
+
+  /*
+   * Method to call the api to save a user
+   * 
+   * @params
+   * user: User - contains the user data to be saved
+   */
   registerUser(user: User){
     console.log("Register user");
     console.log(user);
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        //'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        'Authorization': 'my-auth-token',
-        'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With',
-      })
-    };
 
-    var postResponse = this.http.post('http://localhost:8080/api/saveuser', JSON.stringify({"user": user, "mode": "SAVE"}), httpOptions)
+    // Http call to the api, retrives an object from the server
+    var postResponse = this.http.post('http://localhost:8080/api/saveuser', JSON.stringify({"user": user, "mode": "SAVE"}), this.httpOptions)
     .pipe().subscribe();
     console.log(postResponse);
-    //this.mongoose.connect('mongodb://localhost:27017/eatmedb', { useNewUrlParser: true });
-
-    /*this.MongoClient.connect(this.url, function(err, db){
-      if(err) throw err;
-
-      console.log("Database created");
-      db.close();
-
-    });*/
   }
 
+  /*
+   * Standardises error behaviour across the service
+   * 
+   * @params
+   * errorSource - the error
+   */
   handleError(errorSource){
     console.log(errorSource);
   }
