@@ -11,6 +11,7 @@ import { ListComponent } from './list/list.component';
 import { PlaceDetailComponent } from './place-detail/place-detail.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
     FormsModule,
     BrowserAnimationsModule,
     MatGridListModule,
+    MatButtonModule,
   ],
   exports: [
     MatGridListModule,
