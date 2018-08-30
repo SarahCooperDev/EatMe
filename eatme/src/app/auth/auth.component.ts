@@ -10,15 +10,18 @@ import { Router } from '@angular/router';
 })
 export class AuthComponent implements OnInit {
 
+  //Set user registered as false.
   register = false;
   @Input() user: User;
 
   constructor(private authService: AuthService, private router: Router ) { }
 
+  // tasks to perform when component initialises.
   ngOnInit() {
     this.user = new User();
   }
 
+  // toggle the register value
   toggleRegister(){
     if(this.register == true){
       this.register = false;
@@ -27,6 +30,7 @@ export class AuthComponent implements OnInit {
     }
   }
 
+  // code to register the user.
   registerUser(){
     var user = new User();
     user.email = "tracer@overwatch";
