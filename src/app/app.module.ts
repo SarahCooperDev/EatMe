@@ -5,13 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import { AppRoutingModule } from './/app-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ListComponent } from './list/list.component';
 import { PlaceDetailComponent } from './place-detail/place-detail.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from "@angular/material";
+import { DashDialogComponent } from './dash-dialog/dash-dialog.component';
 
 
 @NgModule({
@@ -22,6 +24,7 @@ import {MatButtonModule} from '@angular/material/button';
     SettingsComponent,
     ListComponent,
     PlaceDetailComponent,
+    DashDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,10 +34,12 @@ import {MatButtonModule} from '@angular/material/button';
     BrowserAnimationsModule,
     MatGridListModule,
     MatButtonModule,
+    MatDialogModule,
   ],
   exports: [
     MatGridListModule,
   ],
+  entryComponents: [DashDialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
