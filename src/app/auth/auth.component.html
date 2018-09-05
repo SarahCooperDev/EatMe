@@ -1,6 +1,7 @@
 <!-- TODO: check forms, add dashboard route, hide signin/register when dash shown. -->
   <div *ngIf="!register" id="signin" style="padding-left: 15%">
     <h3>Sign In</h3>
+    <p>{{errorMsg}}</p>
     <form>
       <table>
         <tr>
@@ -10,7 +11,7 @@
           <td><label>Password: </label></td><td><input [(ngModel)]="user.password" name="inPassword" type="password"></td>
         </tr>
         <tr>
-          <td><button (click)="registerUser()">GO</button></td>
+          <td><button (click)="loginUser()">GO</button></td>
         </tr>
         <tr>
           <p (click)="toggleRegister()">Not a user? Click to register!</p>
@@ -21,6 +22,7 @@
 
   <div *ngIf="register" id="signup" style="padding-left: 15%">
     <h3>Sign Up</h3>
+    <p>{{errorMsg}}</p>
     <form>
     <table>
       <tr>

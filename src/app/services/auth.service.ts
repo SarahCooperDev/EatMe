@@ -4,10 +4,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { User } from '../models/user';
-import { Observable } from '../../../node_modules/rxjs';
-import { CATCH_ERROR_VAR } from '../../../node_modules/@angular/compiler/src/output/output_ast';
+import { Observable} from 'rxjs';
+//import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
+import { CATCH_ERROR_VAR } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'
@@ -39,8 +41,39 @@ export class AuthService {
 
     // Http call to the api, retrives an object from the server
     var postResponse = this.http.post('http://localhost:8080/api/saveuser', JSON.stringify({"user": user, "mode": "SAVE"}), this.httpOptions)
-    .pipe().subscribe();
-    console.log(postResponse);
+    .pipe().subscribe(result => {
+      console.log("Result");
+      console.log(result);
+    });
+    //.pipe().subscribe();
+    //console.log(postResponse);
+
+  }
+
+   /*
+   * Method to call the api to authenticate a user
+   * 
+   * @params
+   * user: User - contains the user data to be saved
+   */
+  loginUser(user: User){
+    console.log("Login user");
+    console.log(user);
+
+    let params = new HttpParams().set("username", user.username);
+    params.append("someParamKey", user.username);
+
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'my-auth-token');
+    headers.append('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+
+    console.log(user.username);
+    // Http call to the api, retrives an object from the server
+    var postResponse = this.http.post('http://localhost:8080/api/login', JSON.stringify({"user": user}), this.httpOptions)
+    .pipe(map(res => res));
+    //console.log(postResponse);
+    return postResponse;
   }
 
   /*
