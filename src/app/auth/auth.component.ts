@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-auth',
@@ -12,6 +15,7 @@ export class AuthComponent implements OnInit {
 
   // Indicates whether the user is registering or signing in
   register = false;
+  errorMsg = '';
 
   // User object, databound to the input fields
   @Input() user: User;
@@ -44,5 +48,18 @@ export class AuthComponent implements OnInit {
     this.user.dateJoined = new Date();
     this.authService.registerUser(this.user);
     this.router.navigateByUrl('/dashboard');
+  }
+
+  loginUser(){
+    console.log("Loggin in user");
+    this.authService.loginUser(this.user).subscribe(result =>{
+      var data = (<any>result);
+      
+      if(data.status == 200){
+        this.router.navigateByUrl('/dashboard');
+      } else {
+        this.errorMsg = "Something went wrong!";
+      }
+    });
   }
 }
