@@ -26,8 +26,51 @@ app.use(function(req, res, next){
     next();
 });
 
-// Set the user schema for mongodb
-//var model = User;
+const passport = require('passport');
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function(user, cb) {
+    cb(null, user.id);
+});
+
+passport.deserializeUser(function(id, cb) {
+    User.findById(id, function(err, user) {
+        cb(err, user);
+    });
+});
+
+const LocalStrategy = require('passport-local').Strategy;
+
+passport.use(new LocalStrategy(function(username, password, done){
+    console.log("In local strategy");
+    User.findOne({username: username}).exec((err, user) =>{
+        console.log("Hit body of login");
+        if(err){
+            return done(err);
+        }
+        if(!user){
+            return done(null, false);
+        } else {
+            bcrypt.compare(password, user.password, function(err, result){
+                if(result){
+                    console.log("Result is " + result);
+                    return done(null, user);
+                } else {
+                    return done(null, false);
+                }
+            })
+        }
+    });
+}));
+
+app.post("/api/login", function(req, res){
+    console.log("BOdy is " + req.body.username + req.body.password);
+    passport.authenticate('local', function(status, user){
+        //res.send({'status': 200});
+        res.redirect('/dashboard');
+    })(req, res);
+});
 
 /*
  * Creates and updates a users data in the database
@@ -64,24 +107,24 @@ app.post('/api/saveuser', function(req, res){
     }
 });
 
-app.post("/api/login", function(req, res){
+/*app.post("/api/login", function(req, res){
     var model = User;
     model.findOne({username: req.body.user.username}).exec((err, data) =>{
         console.log("Hit body of login");
-        if(err){
-            res.send(err);
+        if(!data){
+            res.send({'status': 401, 'errorMsg' : 'User doesn\'t exist!'});
         } else {
             bcrypt.compare(req.body.user.password, data.password, function(err, result){
                 if(result){
                     console.log("Result is " + result);
                     res.send({'data':data, 'status': 200});
                 } else {
-                    res.send({'status': 401});
+                    res.send({'status': 401, 'errorMsg': 'Password incorrect!'});
                 }
             })
         }
     });
-});
+});*/
 
 /*
  * Deletes a user from the database

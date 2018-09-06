@@ -70,9 +70,8 @@ export class AuthService {
 
     console.log(user.username);
     // Http call to the api, retrives an object from the server
-    var postResponse = this.http.post('http://localhost:8080/api/login', JSON.stringify({"user": user}), this.httpOptions)
+    var postResponse = this.http.post('http://localhost:8080/api/login', JSON.stringify({"username": user.username, "password": user.password}), this.httpOptions)
     .pipe(map(res => res));
-    //console.log(postResponse);
     return postResponse;
   }
 
