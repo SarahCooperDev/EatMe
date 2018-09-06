@@ -14,7 +14,10 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from "@angular/material";
 import { DashDialogComponent } from './dash-dialog/dash-dialog.component';
-
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,10 @@ import { DashDialogComponent } from './dash-dialog/dash-dialog.component';
     MatGridListModule,
     MatButtonModule,
     MatDialogModule,
+    MatMenuModule,
+    MatIconModule,
+    MatExpansionModule,
+    MatFormFieldModule,
   ],
   exports: [
     MatGridListModule,
