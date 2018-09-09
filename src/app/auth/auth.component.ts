@@ -58,7 +58,7 @@ export class AuthComponent implements OnInit {
       if(data.status == 200){
         this.router.navigateByUrl('/dashboard');
       } else {
-        this.errorMsg = "Something went wrong!";
+        this.errorMsg = data.errorMsg;
       }
     });
   }
