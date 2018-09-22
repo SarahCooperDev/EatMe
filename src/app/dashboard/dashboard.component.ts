@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import { AuthService } from "../services/auth.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -8,8 +9,14 @@ import { Router } from "@angular/router";
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log("IN INIT");
+
+    this.authService.checkAuth().subscribe(result => {
+      console.log("In subscribe");
+    });
+  }
 
 }

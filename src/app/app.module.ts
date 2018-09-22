@@ -4,13 +4,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
-import { AppRoutingModule } from './/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ListComponent } from './list/list.component';
 import { PlaceDetailComponent } from './place-detail/place-detail.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { CompareComponent } from './compare/compare.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
     SettingsComponent,
     ListComponent,
     PlaceDetailComponent,
+    CompareComponent,
   ],
   imports: [
     BrowserModule,

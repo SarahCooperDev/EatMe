@@ -45,8 +45,16 @@ export class AuthComponent implements OnInit {
    */
   registerUser(){
     this.user.dateJoined = new Date();
-    this.authService.registerUser(this.user);
-    this.router.navigateByUrl('/dashboard');
+    this.authService.registerUser(this.user).subscribe(result =>{
+      var data = (<any>result);
+
+      if(data.status == 200){
+        this.router.navigateByUrl('/dashboard');
+      } else {
+        this.errorMsg = data.errorMsg;
+      }
+
+    });
   }
 
   loginUser(){
