@@ -1,8 +1,10 @@
 /*
- * Stores the user data in a schema, for MongoDB to use
+ * Simple model to contain the data that described a user
  */
 
-const mongoose = require('mongoose');
+ 'use strict';
+
+ const mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
@@ -12,9 +14,6 @@ var UsersSchema = new Schema({
     username: {type: String},
     dateJoined: {type: Date},
     country: {type: String},
-    images: [{data: Buffer, contentType: String}]
 }, {versionKey: false});
 
 module.exports = mongoose.model('User', UsersSchema);
-
-

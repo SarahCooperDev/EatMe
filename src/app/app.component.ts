@@ -11,7 +11,7 @@ export class AppComponent {
 
   constructor(private router: Router) {
     this.checkURL();
-    this.router.navigate(["/auth"]);
+    //this.router.navigate(["/auth"]);
   }
 
   checkURL(): boolean {

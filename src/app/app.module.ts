@@ -12,6 +12,8 @@ import { PlaceDetailComponent } from './place-detail/place-detail.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { CompareComponent } from './compare/compare.component';
+import { ArchiveComponent } from './archive/archive.component';
+import { ImageUploadComponent } from './image-upload/image-upload.component';
 
 
 @NgModule({
@@ -23,6 +25,8 @@ import { CompareComponent } from './compare/compare.component';
     ListComponent,
     PlaceDetailComponent,
     CompareComponent,
+    ArchiveComponent,
+    ImageUploadComponent,
   ],
   imports: [
     BrowserModule,

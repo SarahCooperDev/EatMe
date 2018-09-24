@@ -6,6 +6,7 @@ var mongo = require("mongoose");
 var bcrypt = require("bcrypt");
 const User = require('./models/User');
 const Word = require('./models/word');
+const multer = require('multer');
 
 var db = mongo.connect("mongodb://localhost:27017/eatmedb", function(err, response){
     if(err){
@@ -156,6 +157,24 @@ app.post('/api/saveuser', function(req, res){
             }
         );
     }
+});
+
+const DIR = './uploads';
+ 
+let storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, DIR);
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.fieldname + '-' + Date.now() + '.' + path.extname(file.originalname));
+    }
+});
+let upload = multer({storage: storage});
+
+app.post('/api/upload', upload.single('foodFile'), (req, res) => {
+    console.log("In api/upload server");
+
+    return res.send({status: '200'});
 });
 
 /*app.post("/api/login", function(req, res){
