@@ -178,7 +178,7 @@ let upload = multer({storage: storage});
 /**
  * 
  */
-app.post('/api/upload', upload.single('foodFile'), (req, res) => {
+app.post('/api/upload', upload.single('dish'), (req, res) => {
     console.log("In api/upload server");
 
     console.log(req.session.id);

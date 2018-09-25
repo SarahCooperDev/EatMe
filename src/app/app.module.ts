@@ -11,7 +11,6 @@ import { ListComponent } from './list/list.component';
 import { PlaceDetailComponent } from './place-detail/place-detail.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatGridListModule} from '@angular/material/grid-list';
-import { CompareComponent } from './compare/compare.component';
 import { ArchiveComponent } from './archive/archive.component';
 import { ImageUploadComponent } from './image-upload/image-upload.component';
 import { ArchiveImagesComponent } from './archive-images/archive-images.component';
@@ -25,7 +24,6 @@ import { ArchiveImagesComponent } from './archive-images/archive-images.componen
     SettingsComponent,
     ListComponent,
     PlaceDetailComponent,
-    CompareComponent,
     ArchiveComponent,
     ImageUploadComponent,
     ArchiveImagesComponent,

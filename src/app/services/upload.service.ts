@@ -28,9 +28,8 @@ export class UploadService {
 
     const uploadData = new FormData();
     uploadData.append('dish', file, file.name);
-    this.http.post('http://localhost:8080/api/upload', uploadData, this.httpOptions).subscribe(event => {
-      console.log(event);
-    });
+    return this.http.post('http://localhost:8080/api/upload', uploadData, this.httpOptions)
+    .pipe(map(res => res));
   }
 
   authenticate(){
@@ -58,8 +57,7 @@ export class UploadService {
       withCredentials: true,
     };
 
-    this.http.post('http://localhost:8080/api/eatenDishes', {}, httpOptions).subscribe(event =>{
-      console.log(event);
-    });
+    return this.http.post('http://localhost:8080/api/eatenDishes', {}, httpOptions)
+    .pipe(map(res => res));
   }
 }

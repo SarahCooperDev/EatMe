@@ -22,7 +22,14 @@ export class ImageUploadComponent implements OnInit {
 
   onFileChanged(event){
     this.selectedFile = event.target.files[0];
-    this.uploadService.uploadFile(this.selectedFile);
+    this.uploadService.uploadFile(this.selectedFile).subscribe(result =>{
+      this.uploadService.getEatenDishes().subscribe(result => {
+        console.log(result);
+  
+        var data = (<any>result);
+  
+      });
+    });
   }
 
   constructor(private uploadService: UploadService) { }

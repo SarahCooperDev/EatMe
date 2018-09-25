@@ -1,3 +1,9 @@
 <div>
   <h2>Dish History</h2>
+  <ul class="dishes">
+    <li *ngFor="let dish of dishes">
+      <span class="plate">{{dish.path}}</span>
+      <img src="../../../uploads/{{dish.path}}"/>
+    </li>
+  </ul>
 </div>
