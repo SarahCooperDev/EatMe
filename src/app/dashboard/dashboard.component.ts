@@ -9,6 +9,7 @@ import {DashDialogComponent} from "../dash-dialog/dash-dialog.component";
 //   placeLocation: string;
 //   placeRating: string;
 // }
+import { AuthService } from "../services/auth.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -18,13 +19,22 @@ import {DashDialogComponent} from "../dash-dialog/dash-dialog.component";
 
 export class DashboardComponent implements OnInit {
 
-  constructor(private router: Router, public dialog: MatDialog) {}
-
   // placeName: string;
   // placeLocation: string;
   // placeRating: string;
+  constructor(private router: Router, private authService: AuthService, public dialog: MatDialog) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log("IN INIT");
+
+    this.authService.checkAuth().subscribe(result => {
+      console.log("In subscribe");
+    });
+  }
+
+  goToArchive(){
+    this.router.navigateByUrl('/archive');
+  }
 
    showDialog(): void {
      // alert("DIALOG");

@@ -1,9 +1,13 @@
 var express = require('express');
+const session = require('express-session');
 var path = require('path');
 var bodyParser = require('body-parser');
 var mongo = require("mongoose");
 var bcrypt = require("bcrypt");
 const User = require('./models/User');
+const Word = require('./models/word');
+const multer = require('multer');
+const FileStore = require('session-file-store')(session);
 
 var db = mongo.connect("mongodb://localhost:27017/eatmedb", function(err, response){
     if(err){
@@ -14,9 +18,25 @@ var db = mongo.connect("mongodb://localhost:27017/eatmedb", function(err, respon
 });
 
 var app = express();
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+
+
+const LocalStrategy = require('passport-local').Strategy;
+
 app.use(bodyParser());
 app.use(bodyParser.json({limit:'5mb'}));
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+    secret: 'blackquartz',
+    saveUninitialized: true,
+    store: new FileStore(),
+    resave: false,
+    cookie : {secure: false, maxAge: 864000000, httpOnly: false },
+}));
 
 app.use(function(req, res, next){
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');    
@@ -26,30 +46,33 @@ app.use(function(req, res, next){
     next();
 });
 
-const passport = require('passport');
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser(function(user, cb) {
-    cb(null, user.id);
+passport.serializeUser(function(user, done) {
+    console.log("Serialize user " + user);
+    console.log(user);
+    done(null, user);
 });
 
-passport.deserializeUser(function(id, cb) {
-    User.findById(id, function(err, user) {
-        cb(err, user);
-    });
+passport.deserializeUser(function(user, done) {
+        console.log("In deserialize");
+        console.log(user);
+    done(null, user);
 });
 
-const LocalStrategy = require('passport-local').Strategy;
 
 passport.use(new LocalStrategy(function(username, password, done){
     console.log("In local strategy");
     User.findOne({username: username}).exec((err, user) =>{
         console.log("Hit body of login");
         if(err){
+            console.log("Error is " + err);
             return done(err);
         }
         if(!user){
+            console.log("No user found  for " + username);
             return done(null, false);
         } else {
             bcrypt.compare(password, user.password, function(err, result){
@@ -57,6 +80,7 @@ passport.use(new LocalStrategy(function(username, password, done){
                     console.log("Result is " + result);
                     return done(null, user);
                 } else {
+                    console.log("Password failed for " + user.password);
                     return done(null, false);
                 }
             })
@@ -67,9 +91,27 @@ passport.use(new LocalStrategy(function(username, password, done){
 app.post("/api/login", function(req, res){
     console.log("BOdy is " + req.body.username + req.body.password);
     passport.authenticate('local', function(status, user){
-        //res.send({'status': 200});
-        res.redirect('/dashboard');
+        req.login(user, function(err){
+            console.log("Error in login");
+            console.log(err);
+            console.log(req.session.id);
+            console.log(req.session);
+            req.session.save(function(){
+                res.send({'status': 200});
+            });
+        });
     })(req, res);
+});
+
+app.post("/api/authenticate", function(req, res){
+    console.log("In session Auth====================================================================");
+    console.log("Session ");
+    console.log(req.session.id);
+    console.log(req.session);
+    console.log("User ");
+    console.log(req.user);
+
+    res.send({'status': 200});
 });
 
 /*
@@ -88,9 +130,22 @@ app.post('/api/saveuser', function(req, res){
 
             mod.save(function(err, data){
                 if(err){
+                    console.log("Error in saving user " + err);
                     res.send(err);
                 } else {
-                    res.send({data: "Record has been inserted.."});
+                    console.log("User created " + data);
+                    passport.authenticate('local', function(status, user){
+                        console.log("In authenticate " + data);
+                        req.login(data, function(err){
+                            console.log("Error in login");
+                            console.log(err);
+                            console.log(req.session.id);
+                            console.log(req.session);
+                            req.session.save(function(){
+                                res.send({'status': 200});
+                            });
+                        });
+                    })(req, res);
                 }
             });
         })
@@ -107,24 +162,47 @@ app.post('/api/saveuser', function(req, res){
     }
 });
 
-/*app.post("/api/login", function(req, res){
-    var model = User;
-    model.findOne({username: req.body.user.username}).exec((err, data) =>{
-        console.log("Hit body of login");
-        if(!data){
-            res.send({'status': 401, 'errorMsg' : 'User doesn\'t exist!'});
-        } else {
-            bcrypt.compare(req.body.user.password, data.password, function(err, result){
-                if(result){
-                    console.log("Result is " + result);
-                    res.send({'data':data, 'status': 200});
-                } else {
-                    res.send({'status': 401, 'errorMsg': 'Password incorrect!'});
-                }
-            })
-        }
+const DIR = './uploads';
+ 
+let storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, DIR);
+    },
+    filename: (req, file, cb) => {
+        console.log(file);
+      cb(null, file.fieldname + ' - ' + file.originalname + '-' + Date.now() + '.' + path.extname(file.originalname));
+    }
+});
+let upload = multer({storage: storage});
+
+/**
+ * 
+ */
+app.post('/api/upload', upload.single('dish'), (req, res) => {
+    console.log("In api/upload server");
+
+    console.log(req.session.id);
+    console.log(req.session);
+
+    User.findOne({username: req.user.username}).exec((err, user) =>{
+        console.log("User is " + user);
+        var newImage = {path: req.file.filename, dateAdded: Date.now()};
+        user.images.push(newImage);
+        user.save();
+        console.log("New user " + user);
+        return res.send({status: '200'});
     });
-});*/
+});
+
+app.post('/api/eatenDishes', (req, res) => {
+    console.log("In Eaten");
+    
+    User.findOne({username: req.user.username}).exec((err, user) =>{
+        console.log("User is " + user);
+
+        return res.send({status: '200', images: user.images});
+    });
+});
 
 /*
  * Deletes a user from the database

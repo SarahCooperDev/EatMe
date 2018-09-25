@@ -24,7 +24,8 @@ export class AuthService {
       'Content-Type': 'application/json',
       'Authorization': 'my-auth-token',
       'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With',
-    })
+    }),
+    withCredentials: true,
   };
 
   constructor(private http: HttpClient) {}
@@ -40,11 +41,9 @@ export class AuthService {
     console.log(user);
 
     // Http call to the api, retrives an object from the server
-    var postResponse = this.http.post('http://localhost:8080/api/saveuser', JSON.stringify({"user": user, "mode": "SAVE"}), this.httpOptions)
-    .pipe().subscribe(result => {
-      console.log("Result");
-      console.log(result);
-    });
+    return this.http.post('http://localhost:8080/api/saveuser', JSON.stringify({"user": user, "mode": "SAVE"}), this.httpOptions)
+    .pipe(map(res => res));
+
     //.pipe().subscribe();
     //console.log(postResponse);
 
@@ -73,6 +72,16 @@ export class AuthService {
     var postResponse = this.http.post('http://localhost:8080/api/login', JSON.stringify({"username": user.username, "password": user.password}), this.httpOptions)
     .pipe(map(res => res));
     return postResponse;
+  }
+
+  checkAuth(){
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'my-auth-token');
+    headers.append('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+
+    console.log("In Check Auth");
+    return this.http.post("http://localhost:8080/api/authenticate", '', this.httpOptions).pipe(map(res => res));
   }
 
   /*
