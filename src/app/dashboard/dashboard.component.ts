@@ -19,4 +19,8 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  goToArchive(){
+    this.router.navigateByUrl('/archive');
+  }
+
 }

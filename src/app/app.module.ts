@@ -14,6 +14,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { CompareComponent } from './compare/compare.component';
 import { ArchiveComponent } from './archive/archive.component';
 import { ImageUploadComponent } from './image-upload/image-upload.component';
+import { ArchiveImagesComponent } from './archive-images/archive-images.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { ImageUploadComponent } from './image-upload/image-upload.component';
     CompareComponent,
     ArchiveComponent,
     ImageUploadComponent,
+    ArchiveImagesComponent,
   ],
   imports: [
     BrowserModule,

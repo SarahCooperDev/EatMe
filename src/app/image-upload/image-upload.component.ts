@@ -28,6 +28,7 @@ export class ImageUploadComponent implements OnInit {
   constructor(private uploadService: UploadService) { }
 
   ngOnInit() {
+    //this.uploadService.authenticate();
   }
 
 }

@@ -7,6 +7,7 @@ var bcrypt = require("bcrypt");
 const User = require('./models/User');
 const Word = require('./models/word');
 const multer = require('multer');
+const FileStore = require('session-file-store')(session);
 
 var db = mongo.connect("mongodb://localhost:27017/eatmedb", function(err, response){
     if(err){
@@ -32,8 +33,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret: 'blackquartz',
     saveUninitialized: true,
+    store: new FileStore(),
     resave: false,
-    cookie : {secure: false, maxAge: 1000 * 60 * 60 * 24, httpOnly: true },
+    cookie : {secure: false, maxAge: 864000000, httpOnly: false },
 }));
 
 app.use(function(req, res, next){
@@ -66,9 +68,11 @@ passport.use(new LocalStrategy(function(username, password, done){
     User.findOne({username: username}).exec((err, user) =>{
         console.log("Hit body of login");
         if(err){
+            console.log("Error is " + err);
             return done(err);
         }
         if(!user){
+            console.log("No user found  for " + username);
             return done(null, false);
         } else {
             bcrypt.compare(password, user.password, function(err, result){
@@ -76,6 +80,7 @@ passport.use(new LocalStrategy(function(username, password, done){
                     console.log("Result is " + result);
                     return done(null, user);
                 } else {
+                    console.log("Password failed for " + user.password);
                     return done(null, false);
                 }
             })
@@ -95,13 +100,11 @@ app.post("/api/login", function(req, res){
                 res.send({'status': 200});
             });
         });
-        //res.redirect('/dashboard');
     })(req, res);
 });
 
 app.post("/api/authenticate", function(req, res){
     console.log("In session Auth====================================================================");
-    //console.log(req);
     console.log("Session ");
     console.log(req.session.id);
     console.log(req.session);
@@ -166,35 +169,40 @@ let storage = multer.diskStorage({
       cb(null, DIR);
     },
     filename: (req, file, cb) => {
-      cb(null, file.fieldname + '-' + Date.now() + '.' + path.extname(file.originalname));
+        console.log(file);
+      cb(null, file.fieldname + ' - ' + file.originalname + '-' + Date.now() + '.' + path.extname(file.originalname));
     }
 });
 let upload = multer({storage: storage});
 
+/**
+ * 
+ */
 app.post('/api/upload', upload.single('foodFile'), (req, res) => {
     console.log("In api/upload server");
 
-    return res.send({status: '200'});
+    console.log(req.session.id);
+    console.log(req.session);
+
+    User.findOne({username: req.user.username}).exec((err, user) =>{
+        console.log("User is " + user);
+        var newImage = {path: req.file.filename, dateAdded: Date.now()};
+        user.images.push(newImage);
+        user.save();
+        console.log("New user " + user);
+        return res.send({status: '200'});
+    });
 });
 
-/*app.post("/api/login", function(req, res){
-    var model = User;
-    model.findOne({username: req.body.user.username}).exec((err, data) =>{
-        console.log("Hit body of login");
-        if(!data){
-            res.send({'status': 401, 'errorMsg' : 'User doesn\'t exist!'});
-        } else {
-            bcrypt.compare(req.body.user.password, data.password, function(err, result){
-                if(result){
-                    console.log("Result is " + result);
-                    res.send({'data':data, 'status': 200});
-                } else {
-                    res.send({'status': 401, 'errorMsg': 'Password incorrect!'});
-                }
-            })
-        }
+app.post('/api/eatenDishes', (req, res) => {
+    console.log("In Eaten");
+    
+    User.findOne({username: req.user.username}).exec((err, user) =>{
+        console.log("User is " + user);
+
+        return res.send({status: '200', images: user.images});
     });
-});*/
+});
 
 /*
  * Deletes a user from the database
@@ -230,45 +238,6 @@ app.get("/api/getUser", function(req, res){
         }
     });
 });
-
-/*app.post("/api/compare", function(req, res){
-    console.log("Getting words");
-
-    /*var word = new Word();
-    word.word = "Thurs";
-    word.save(function(err, data){
-        if(err){
-            //res.send(err);
-            console.log("Word didn't insert");
-        } else {
-            console.log("Word was inserted");
-            //res.send({data: "Record has been inserted.."});
-        }
-    });
-
-    Word.findOne({}, function(err, data){
-        if(err){
-            res.send({'result': 'Error', 'status': 500});
-        } 
-        if(!data){
-            res.send({'result': 'No words in database', 'status': 401});
-        }else {
-            console.log("Word found");
-            console.log(data);
-            console.log("Request word is " + req.body.word);
-            console.log("Data word is " + data.word);
-            //console.log(req);
-            
-            if(data.word == req.body.word){
-                res.send({'result': 'Perfect', 'status': 200});
-            } else if(data.word > req.body.word){
-                res.send({'result': 'Try Higher!', 'status': 200});
-            } else {
-                res.send({'result': 'Try Lower!', 'status': 200});
-            }
-        }
-    });
-});*/
 
 app.listen(8080, function(){
     console.log('Example app listening on port 8080!');

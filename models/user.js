@@ -12,7 +12,7 @@ var UsersSchema = new Schema({
     username: {type: String},
     dateJoined: {type: Date},
     country: {type: String},
-    images: [{data: Buffer, contentType: String}]
+    images: [{path: String, dateAdded: Date}]
 }, {versionKey: false});
 
 module.exports = mongoose.model('User', UsersSchema);
