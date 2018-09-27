@@ -9,7 +9,9 @@ const Word = require('./models/word');
 const multer = require('multer');
 const FileStore = require('session-file-store')(session);
 
-var db = mongo.connect("mongodb://localhost:27017/eatmedb", function(err, response){
+var uri = "mongodb://ImmerSie:<atlascomp1!>@eatme-shard-00-00-q3a6r.mongodb.net:27017,eatme-shard-00-01-q3a6r.mongodb.net:27017,eatme-shard-00-02-q3a6r.mongodb.net:27017/test?ssl=true&replicaSet=eatme-shard-0&authSource=admin&retryWrites=true";
+var uri2 = "mongodb+srv://ImmerSie:atlascomp1!@eatme-q3a6r.mongodb.net/test?retryWrites=true";
+var db = mongo.connect(uri2, { useNewUrlParser: true },function(err, response){
     if(err){
         console.log(err);
     } else {
