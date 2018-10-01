@@ -23,4 +23,8 @@ export class DashboardComponent implements OnInit {
     this.router.navigateByUrl('/archive');
   }
 
+  goToFriends(){
+    this.router.navigateByUrl('/friends');
+  }
+
 }

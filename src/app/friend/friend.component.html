@@ -1,0 +1,21 @@
+<div>
+  <h2>Friends</h2>
+  <div>
+    <form>
+      <table>
+        <tr>
+          <td><label>Search Username: </label></td><td><input [(ngModel)]="searchedUsername" name="searchedUsername" placeholder="username" type="text"></td>
+        </tr>
+        <tr>
+          <td><button (click)="addFriend()">GO</button></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+  <h3>Your Foodie Buddies</h3>
+  <ul>
+    <li *ngFor="let friend of friends">
+      <span class="friend">{{friend.username}}</span>
+    </li>
+  </ul>
+</div>
