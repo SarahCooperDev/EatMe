@@ -56,6 +56,10 @@ export class DashboardComponent implements OnInit {
   //     this.placeRating = result;
   //   });
    }
+  goToFriends(){
+    this.router.navigateByUrl('/friends');
+  }
+
 }
 
 

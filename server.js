@@ -230,7 +230,7 @@ app.post("/api/deleteUser", function(req, res){
  * '' - url of the route
  * function - callback for route, containing the request and response of the call
  */
-app.get("/api/getUser", function(req, res){
+app.get("/api/getUsers", function(req, res){
     console.log("getting users");
     model.find({}, function(err, data){
         if(err){
@@ -238,6 +238,61 @@ app.get("/api/getUser", function(req, res){
         } else {
             res.send(data);
         }
+    });
+});
+
+app.get("/api/getFriends", function(req, res){
+    console.log("Getting friends");
+
+    User.findOne({username: req.user.username}).exec((err, user) =>{
+        console.log("User is " + user);
+
+        return res.send({status: '200', friends: user.friends});
+    });
+});
+
+app.post("/api/addFriend", function(req, res){
+    console.log("Add friend");
+    console.log(req.body.searched);
+
+    User.findOne({username: req.user.username}).exec((err, user) =>{
+        console.log("User is " + user);
+
+        User.findOne({username: req.body.searched}).exec((err, friend) =>{
+            console.log("Friend is " + friend);
+            if(!err){
+                var friName = {_id: friend._id, username: friend.username};
+                user.friends.push(friName);
+                user.save();
+            }
+
+            console.log("Friends");
+            console.log(user);
+    
+            return res.send({status: '200', friends: user.friends});
+        });
+    });
+});
+
+app.get("/api/friendsdishes", function(req, res){
+    console.log("In friends dishes!");
+
+    User.findOne({username: req.user.username}).exec((err, user) =>{
+        console.log("User is " + user);
+
+        User.find({'_id': {$in: user.friends}}, function(err, friends){
+            console.log("Getting friends");
+            console.log(friends);
+
+            var dishes = [];
+
+            friends.forEach(friend => {
+                dishes.push(friend.images);
+            });
+            console.log("Dishes are");
+            console.log(dishes);
+            return res.send({status: '200', dishes: dishes});
+        });
     });
 });
 

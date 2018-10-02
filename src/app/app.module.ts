@@ -21,6 +21,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { ArchiveComponent } from './archive/archive.component';
 import { ImageUploadComponent } from './image-upload/image-upload.component';
 import { ArchiveImagesComponent } from './archive-images/archive-images.component';
+import { FriendComponent } from './friend/friend.component';
+import { DashImagesComponent } from './dash-images/dash-images.component';
 
 
 @NgModule({
@@ -35,6 +37,8 @@ import { ArchiveImagesComponent } from './archive-images/archive-images.componen
     ArchiveComponent,
     ImageUploadComponent,
     ArchiveImagesComponent,
+    FriendComponent,
+    DashImagesComponent,
   ],
   imports: [
     BrowserModule,

@@ -59,7 +59,7 @@ export class AuthComponent implements OnInit {
   }
 
   loginUser(){
-    console.log("Loggin in user");
+    console.log("Logging in user");
     this.authService.loginUser(this.user).subscribe(result =>{
       var data = (<any>result);
       
