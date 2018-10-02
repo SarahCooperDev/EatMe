@@ -274,6 +274,28 @@ app.post("/api/addFriend", function(req, res){
     });
 });
 
+app.get("/api/friendsdishes", function(req, res){
+    console.log("In friends dishes!");
+
+    User.findOne({username: req.user.username}).exec((err, user) =>{
+        console.log("User is " + user);
+
+        User.find({'_id': {$in: user.friends}}, function(err, friends){
+            console.log("Getting friends");
+            console.log(friends);
+
+            var dishes = [];
+
+            friends.forEach(friend => {
+                dishes.push(friend.images);
+            });
+            console.log("Dishes are");
+            console.log(dishes);
+            return res.send({status: '200', dishes: dishes});
+        });
+    });
+});
+
 app.listen(8080, function(){
     console.log('Example app listening on port 8080!');
 });
