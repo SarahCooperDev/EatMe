@@ -7,6 +7,7 @@ import {SettingsComponent} from "./settings/settings.component";
 import {ListComponent} from "./list/list.component";
 import { ArchiveComponent } from './archive/archive.component';
 import { FriendComponent } from './friend/friend.component';
+import { MenuComponent} from './menu/menu.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'auth', pathMatch: 'full'},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'list', component: ListComponent},
   {path: 'archive', component: ArchiveComponent},
   {path: 'friends', component: FriendComponent},
+  {path: 'menu', component: MenuComponent},
 ];
 @NgModule({
   exports: [ RouterModule ],

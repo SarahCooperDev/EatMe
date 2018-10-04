@@ -29,6 +29,14 @@ export class DashboardComponent implements OnInit {
 
     this.authService.checkAuth().subscribe(result => {
       console.log("In subscribe");
+      var data = (<any>result);
+
+      console.log("Status is " + data.status);
+
+      if(data.status != 200){
+        this.router.navigateByUrl('/auth');
+      }
+
     });
   }
 
@@ -58,6 +66,16 @@ export class DashboardComponent implements OnInit {
    }
   goToFriends(){
     this.router.navigateByUrl('/friends');
+  }
+
+  goToMenu(){
+    this.router.navigateByUrl('/menu');
+  }
+
+  logout(){
+    this.authService.logout().subscribe(res => {
+      this.router.navigateByUrl('/auth');
+    });
   }
 
 }

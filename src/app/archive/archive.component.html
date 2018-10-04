@@ -1,7 +1,11 @@
 <div>
   <h2>Your Dishes</h2>
-  <!-- TODO: get most recent images from listofOtherUsers for User - "your feed"-->
-  <!-- TODO: put below into a menu -->
+  <div>
+    <button (click)="goToDash()">Dashboard</button>
+    <button (click)="goToFriends()">Friends</button>
+    <button (click)="goToMenu()">Menu</button>
+    <button (click)="logout()">Log Out</button>
+  </div>
   <app-image-upload></app-image-upload>
   <app-archive-images></app-archive-images>
 </div>

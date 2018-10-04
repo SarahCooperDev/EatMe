@@ -113,7 +113,21 @@ app.post("/api/authenticate", function(req, res){
     console.log(req.session.id);
     console.log(req.session);
     console.log("User ");
-    console.log(req.user);
+    console.log(req.user.username);
+
+    if(req.user){
+        res.send({'status': 200});
+    } else {
+        res.send({'status': 501});
+    }
+   
+});
+
+app.get("/logout", function(req, res){
+    console.log("Loggin out user");
+    console.log(req.user.username);
+
+    req.logout();
 
     res.send({'status': 200});
 });

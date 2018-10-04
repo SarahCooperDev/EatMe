@@ -24,6 +24,7 @@ import { ArchiveImagesComponent } from './archive-images/archive-images.componen
 import { FriendComponent } from './friend/friend.component';
 import { DashImagesComponent } from './dash-images/dash-images.component';
 import {MatInputModule} from "@angular/material";
+import { MenuComponent } from './menu/menu.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import {MatInputModule} from "@angular/material";
     ArchiveImagesComponent,
     FriendComponent,
     DashImagesComponent,
+    MenuComponent,
   ],
   imports: [
     BrowserModule,
