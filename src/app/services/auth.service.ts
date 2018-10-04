@@ -74,6 +74,10 @@ export class AuthService {
     return postResponse;
   }
 
+  logout(){
+    return this.http.get('http://localhost:8080/logout', this.httpOptions).pipe(map(res => res));
+  }
+
   checkAuth(){
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');

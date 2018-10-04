@@ -1,9 +1,14 @@
 <div>
   <h2>Dish History</h2>
-  <ul class="dishes">
+  <!--<ul class="dishes">
     <li *ngFor="let dish of dishes">
       <span class="plate">{{dish.path}}</span>
       <img src="../../../uploads/{{dish.path}}"/>
     </li>
-  </ul>
+  </ul>-->
+  <mat-grid-list cols="3" rowHeight="1:1" gutterSize="3">
+    <mat-grid-tile *ngFor="let dish of dishes">
+      <img class="tile-image" src="../../../uploads/{{dish.path}}"/>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>
