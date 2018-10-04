@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {User} from '../models/user';
 
 @Component({
   selector: 'app-settings',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
 
+  @Input() user: User;
+
   constructor() { }
 
   ngOnInit() {
+    this.user = new User;
   }
 
+  updateUser(){
+    //check user is logged in.
+    //get fields, replace current user fields with these
+  }
 }

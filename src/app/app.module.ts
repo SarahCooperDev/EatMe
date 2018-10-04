@@ -23,6 +23,7 @@ import { ImageUploadComponent } from './image-upload/image-upload.component';
 import { ArchiveImagesComponent } from './archive-images/archive-images.component';
 import { FriendComponent } from './friend/friend.component';
 import { DashImagesComponent } from './dash-images/dash-images.component';
+import {MatInputModule} from "@angular/material";
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { DashImagesComponent } from './dash-images/dash-images.component';
     MatIconModule,
     MatExpansionModule,
     MatFormFieldModule,
+    MatInputModule,
   ],
   exports: [
     MatGridListModule,

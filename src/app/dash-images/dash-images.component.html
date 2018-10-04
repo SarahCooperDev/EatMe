@@ -1,8 +1,11 @@
 <div>
   <h2>My Friends Dishes</h2>
-  <ul class="dishes">
-    <li *ngFor="let dish of friendDishes">
-      <img src="../../../uploads/{{dish[0].path}}"/>
-    </li>
-  </ul>
+  <!--<ul class="dishes">-->
+    <!--<li *ngFor="let dish of friendDishes">-->
+      <!--<img src="../../../uploads/{{dish[0].path}}"/>-->
+    <!--</li>-->
+  <!--</ul>-->
+  <mat-grid-list cols="3" *ngFor="let dish of friendDishes" class="dishes">
+    <mat-grid-tile><img src="../../../uploads/{{dish[0].path}}"/></mat-grid-tile>
+  </mat-grid-list>
 </div>
