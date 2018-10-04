@@ -1,13 +1,8 @@
 <div>
   <h2>My Friends Dishes</h2>
-  <!--<ul class="dishes">
-    <li *ngFor="let dish of friendDishes">
-      <img src="../../../uploads/{{dish[0].path}}"/>
-    </li>
-  </ul>-->
   <mat-grid-list cols="3" rowHeight="1:1" gutterSize="3">
     <mat-grid-tile *ngFor="let dish of friendDishes">
-      <img class="tile-image" src="../../../uploads/{{dish[0].path}}"/>
+      <img class="tile-image" (click)="addToMenu(dish[0])" src="../../../uploads/{{dish[0].path}}"/>
     </mat-grid-tile>
   </mat-grid-list>
 </div>

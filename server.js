@@ -310,6 +310,32 @@ app.get("/api/friendsdishes", function(req, res){
     });
 });
 
+app.post("/api/addtomenu", function(req, res){
+    console.log("In adding to menu");
+    console.log("adding dish " + req.body.dish.path);
+
+    User.findOne({username: req.user.username}).exec((err, user) =>{
+
+        console.log("User is " + user);
+        var newDish = {path: req.body.dish.path, dateAdded: Date.now()};
+        user.menu.push(newDish);
+        user.save();
+
+        console.log(user.menu);
+
+       return res.send({status: '200'});
+    });
+});
+
+app.get("/api/menu", function(req, res){
+    console.log("Retrieving menu");
+
+    User.findOne({username: req.user.username}).exec((err, user) =>{
+        console.log("User is " + user);
+        return res.send({status: '200', menu: user.menu});
+    });
+})
+
 app.listen(8080, function(){
     console.log('Example app listening on port 8080!');
 });

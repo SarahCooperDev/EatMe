@@ -13,7 +13,8 @@ var UsersSchema = new Schema({
     dateJoined: {type: Date},
     country: {type: String},
     images: [{path: String, dateAdded: Date}],
-    friends: [{username: String}]
+    friends: [{username: String}],
+    menu: [{path: String, dateAdded: Date}]
 }, {versionKey: false});
 
 module.exports = mongoose.model('User', UsersSchema);

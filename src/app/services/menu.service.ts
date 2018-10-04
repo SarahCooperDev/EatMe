@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class DashboardService {
+export class MenuService {
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -18,17 +18,9 @@ export class DashboardService {
 
   constructor(private http: HttpClient) { }
 
-  getFriendDishes(){
-    console.log("In dash service");
-    return this.http.get('http://localhost:8080/api/friendsdishes', this.httpOptions)
-    .pipe(map(res => res));
-  }
-
-  addFriendsDish(dish){
-    console.log("Adding friends dish");
-    console.log(dish.path);
-
-    return this.http.post('http://localhost:8080/api/addtomenu', {dish: dish}, this.httpOptions)
+  getMenu(){
+    console.log("In menu service");
+    return this.http.get('http://localhost:8080/api/menu', this.httpOptions)
     .pipe(map(res => res));
   }
 }

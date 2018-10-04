@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { AuthService } from "../services/auth.service";
+import { MenuService } from "../services/menu.service";
 
 @Component({
   selector: 'app-menu',
@@ -8,8 +9,9 @@ import { AuthService } from "../services/auth.service";
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
+  dishes;
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService, private menuService: MenuService) { }
 
   ngOnInit() {
     this.authService.checkAuth().subscribe(result => {
@@ -20,7 +22,18 @@ export class MenuComponent implements OnInit {
 
       if(data.status != 200){
         this.router.navigateByUrl('/auth');
+      } else {
+        this.menuService.getMenu().subscribe(result => {
+          console.log("Done get dishes");
+          var data = (<any>result);
+    
+          this.dishes = data.menu;
+          console.log(data.menu);
+    
+          console.log("One example is " + this.dishes[0].path);
+        });
       }
+
 
     });
   }
