@@ -202,7 +202,8 @@ app.post('/api/upload', upload.single('dish'), (req, res) => {
 
     User.findOne({username: req.user.username}).exec((err, user) =>{
         console.log("User is " + user);
-        var newImage = {path: req.file.filename, dateAdded: Date.now()};
+        console.log("Location is " + req.body.location);
+        var newImage = {path: req.file.filename, dateAdded: Date.now(), location: req.body.location};
         user.images.push(newImage);
         user.save();
         console.log("New user " + user);
@@ -317,7 +318,7 @@ app.post("/api/addtomenu", function(req, res){
     User.findOne({username: req.user.username}).exec((err, user) =>{
 
         console.log("User is " + user);
-        var newDish = {path: req.body.dish.path, dateAdded: Date.now()};
+        var newDish = {path: req.body.dish.path, dateAdded: Date.now(), location: req.body.dish.location};
         user.menu.push(newDish);
         user.save();
 
