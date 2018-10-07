@@ -336,7 +336,21 @@ app.get("/api/menu", function(req, res){
     console.log("User is " + user);
     return res.send({status: '200', menu: user.menu});
   });
-})
+});
+
+//PLEASE CHECK :)
+app.get("/api/update", function(req, res){
+  console.log("updating user");
+  bcrypt.hash(req.body.newPassword, 10, function(err, hash) {
+    req.body.newPassword = hash;
+  });
+  User.updateOne({username: req.user.username}, {$set:{username: req.newUsername,
+      email: req.newEmail, password: req.newPassword}}, function(err, res){
+    if(err) console.log(err);
+    console.log("user updated");
+    return res.send({status: 200});
+  });
+});
 
 app.listen(8080, function(){
   console.log('Example app listening on port 8080!');

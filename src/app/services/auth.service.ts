@@ -88,6 +88,30 @@ export class AuthService {
     return this.http.post("http://localhost:8080/api/authenticate", '', this.httpOptions).pipe(map(res => res));
   }
 
+  updateUserInfo(user: User, newName, newEmail, newPassword){
+    console.log("Update user");
+    console.log(user);
+
+    let params = new HttpParams().set("username", user.username);
+    params.append("newUsername", newName);
+    params.append("newPassword", newPassword);
+    params.append("newEmail", newEmail);
+    params.append("someParamKey", user.username);
+
+    //USE PASSWORD HASHING AND CHECKS.
+
+    let headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'my-auth-token');
+    headers.append('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+
+    console.log(user.username);
+    // Http call to the api, retrives an object from the server
+    var postResponse = this.http.post('http://localhost:8080/api/update', this.httpOptions)
+      .pipe(map(res => res));
+    return postResponse;
+  }
+
   /*
    * Standardises error behaviour across the service
    * 
