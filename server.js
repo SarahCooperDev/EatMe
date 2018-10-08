@@ -72,11 +72,11 @@ passport.use(new LocalStrategy(function(username, password, done){
     console.log("Hit body of login");
     if(err){
       console.log("Error is " + err);
-      return done(err);
+      return done("Internal error");
     }
     if(!user){
       console.log("No user found  for " + username);
-      return done(null, false);
+      return done("Username not found");
     } else {
       bcrypt.compare(password, user.password, function(err, result){
         if(result){
@@ -84,7 +84,7 @@ passport.use(new LocalStrategy(function(username, password, done){
           return done(null, user);
         } else {
           console.log("Password failed for " + user.password);
-          return done(null, false);
+          return done("Password incorrect");
         }
       })
     }
@@ -92,16 +92,21 @@ passport.use(new LocalStrategy(function(username, password, done){
 }));
 
 app.post("/api/login", function(req, res){
-  console.log("BOdy is " + req.body.username + req.body.password);
   passport.authenticate('local', function(status, user){
+    if(status == "Internal error"){
+      return res.send({'status': 500, 'errorMsg': status});
+    } else if(status == "Username not found" || status == "Password incorrect"){
+      return res.send({'status': 404, 'errorMsg': status});
+    }
+
     req.login(user, function(err){
-      console.log("Error in login");
-      console.log(err);
-      console.log(req.session.id);
-      console.log(req.session);
-      req.session.save(function(){
-        res.send({'status': 200});
-      });
+      if(err){
+        return res.send({'status': 500, 'errorMsg': "Error with user serialization"});
+      } else {
+        req.session.save(function(){
+          return res.send({'status': 200});
+        });
+      }
     });
   })(req, res);
 });

@@ -62,6 +62,8 @@ export class AuthComponent implements OnInit {
     console.log("Logging in user");
     this.authService.loginUser(this.user).subscribe(result =>{
       var data = (<any>result);
+
+      console.log("Status is " + data.status);
       
       if(data.status == 200){
         this.router.navigateByUrl('/dashboard');
