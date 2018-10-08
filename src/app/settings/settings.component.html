@@ -1,1 +1,70 @@
-<p>User Settings go here.</p>
+<h2>Settings</h2>
+<!--<mat-accordion>-->
+
+  <!--<mat-expansion-panel>-->
+    <!--<mat-expansion-panel-header>-->
+      <!--<mat-panel-title>-->
+        <!--Username-->
+      <!--</mat-panel-title>-->
+      <!--<mat-panel-description>-->
+      <!--</mat-panel-description>-->
+    <!--</mat-expansion-panel-header>-->
+    <!--&lt;!&ndash;<form onsubmit="updateUser">&ndash;&gt;-->
+      <!--<mat-form-field appearance="standard" onsubmit="updateUser">-->
+        <!--<input matInput placeholder="Username" [(ngModel)]="user.username"/>-->
+      <!--</mat-form-field>-->
+    <!--&lt;!&ndash;</form>&ndash;&gt;-->
+  <!--</mat-expansion-panel>-->
+
+  <!--<mat-expansion-panel>-->
+    <!--<mat-expansion-panel-header>-->
+      <!--<mat-panel-title>-->
+        <!--Email-->
+      <!--</mat-panel-title>-->
+      <!--<mat-panel-description>-->
+      <!--</mat-panel-description>-->
+    <!--</mat-expansion-panel-header>-->
+    <!--&lt;!&ndash;<form onsubmit="updateUser">&ndash;&gt;-->
+      <!--<mat-form-field appearance="standard" onsubmit="updateUser">-->
+        <!--<input matInput placeholder="Email" [(ngModel)]="user.email" type="email"/>-->
+        <!--&lt;!&ndash;<input matInput type="submit" label="Update Email">&ndash;&gt;-->
+      <!--</mat-form-field>-->
+    <!--&lt;!&ndash;</form>&ndash;&gt;-->
+  <!--</mat-expansion-panel>-->
+
+  <!--<mat-expansion-panel>-->
+    <!--<mat-expansion-panel-header>-->
+      <!--<mat-panel-title>-->
+        <!--Password-->
+      <!--</mat-panel-title>-->
+      <!--<mat-panel-description>-->
+      <!--</mat-panel-description>-->
+    <!--</mat-expansion-panel-header>-->
+    <!--<mat-form-field appearance="standard" onsubmit="updateUser">-->
+      <!--&lt;!&ndash;<form onsubmit="updateUser">&ndash;&gt;-->
+        <!--<input matInput placeholder="Password" [(ngModel)]="user.password" type="password"/>-->
+        <!--&lt;!&ndash;<input matInput type="submit" label="Update Password">&ndash;&gt;-->
+      <!--&lt;!&ndash;</form>&ndash;&gt;-->
+    <!--</mat-form-field>-->
+  <!--</mat-expansion-panel>-->
+<!--</mat-accordion>-->
+<p>Press Enter key to submit changes</p>
+
+<form onsubmit="updateUser">
+  <div>
+    <mat-form-field>
+      <input matInput id="username" placeholder="Username" [(ngModel)]="user.username">
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input matInput id="email" placeholder="Email" [(ngModel)]="user.email" type="email"/>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input matInput id="password" placeholder="Password" type="password"/>
+    </mat-form-field>
+  </div>
+</form>
+

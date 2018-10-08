@@ -12,6 +12,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
+
   // Indicates whether the user is registering or signing in
   register = false;
   errorMsg = '';
@@ -58,7 +59,7 @@ export class AuthComponent implements OnInit {
   }
 
   loginUser(){
-    console.log("Loggin in user");
+    console.log("Logging in user");
     this.authService.loginUser(this.user).subscribe(result =>{
       var data = (<any>result);
       

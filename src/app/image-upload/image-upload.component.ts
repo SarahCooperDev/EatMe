@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { User } from '../models/user';
 import { UploadService } from '../services/upload.service';
@@ -11,6 +11,7 @@ import { UploadService } from '../services/upload.service';
 export class ImageUploadComponent implements OnInit {
   selectedFile: File;
   location;
+  @Output() refresh = new EventEmitter<any>();
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -32,7 +33,8 @@ export class ImageUploadComponent implements OnInit {
         console.log(result);
   
         var data = (<any>result);
-  
+        this.refresh.emit();
+        console.log("Emitted");
       });
     });
   }

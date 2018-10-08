@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { UploadService } from '../services/upload.service';
 
 @Component({
@@ -8,10 +8,16 @@ import { UploadService } from '../services/upload.service';
 })
 export class ArchiveImagesComponent implements OnInit {
   dishes;
+  
 
-  constructor(private uploadService: UploadService) { }
+  constructor(private uploadService: UploadService, private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.getDishes();
+  }
+
+  getDishes(){
+    console.log("Updating UI");
     this.uploadService.getEatenDishes().subscribe(result => {
       console.log(result);
 
@@ -20,8 +26,9 @@ export class ArchiveImagesComponent implements OnInit {
       this.dishes = data.images;
 
       console.log("Images are " + this.dishes);
-
+      this.ref.detectChanges();
     });
+
   }
 
 }

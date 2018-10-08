@@ -1,5 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from "@angular/router";
+//import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog, MatDialogConfig} from "@angular/material";
+import {DashDialogComponent} from "../dash-dialog/dash-dialog.component";
+
+// export interface DialogData {
+//   placeName: string;
+//   placeLocation: string;
+//   placeRating: string;
+// }
 import { AuthService } from "../services/auth.service";
 
 @Component({
@@ -7,9 +16,13 @@ import { AuthService } from "../services/auth.service";
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
+
 export class DashboardComponent implements OnInit {
 
-  constructor(private router: Router, private authService: AuthService) {}
+  // placeName: string;
+  // placeLocation: string;
+  // placeRating: string;
+  constructor(private router: Router, private authService: AuthService, public dialog: MatDialog) {}
 
   ngOnInit() {
     console.log("IN INIT");
@@ -31,6 +44,26 @@ export class DashboardComponent implements OnInit {
     this.router.navigateByUrl('/archive');
   }
 
+   showDialog(): void {
+     // alert("DIALOG");
+     const dialogConfig = new MatDialogConfig();
+     dialogConfig.disableClose = true;
+     dialogConfig.autoFocus = true;
+     this.dialog.open(DashDialogComponent, dialogConfig);
+     //   const dialogRef = this.dialog.open(DashboardComponentDialog, {
+  //     width: '250px',
+  //     data: {
+  //       placeName: this.placeName,
+  //       placeLocation: this.placeLocation,
+  //       placeRating: this.placeRating
+  //     }
+  //   });
+  //
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //     this.placeRating = result;
+  //   });
+   }
   goToFriends(){
     this.router.navigateByUrl('/friends');
   }
@@ -46,3 +79,6 @@ export class DashboardComponent implements OnInit {
   }
 
 }
+
+
+

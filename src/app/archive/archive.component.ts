@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { AuthService } from '../services/auth.service';
+import { ArchiveImagesComponent } from '../archive-images/archive-images.component';
+import { UploadService } from '../services/upload.service';
 
 @Component({
   selector: 'app-archive',
@@ -8,8 +10,11 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./archive.component.css']
 })
 export class ArchiveComponent implements OnInit {
+  @ViewChild(ArchiveImagesComponent)
+  private imagesComponent: ArchiveImagesComponent;
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService, private uploadService: UploadService, private ref: ChangeDetectorRef) { 
+  }
 
   ngOnInit() {
     this.authService.checkAuth().subscribe(result => {
@@ -23,6 +28,11 @@ export class ArchiveComponent implements OnInit {
       }
 
     });
+  }
+
+  imageUpdate(){
+    console.log("In image update");
+    this.imagesComponent.getDishes();
   }
 
   goToDash(){

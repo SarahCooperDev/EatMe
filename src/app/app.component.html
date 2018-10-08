@@ -8,11 +8,21 @@
   </h1>
   <!--<button (click)="checkURL()">CHECK URL</button>-->
 </div>
-<!--<div id="nav" style="text-align: center">
-  <button routerLink="/auth">Sign In </button>
-  <button routerLink="/dashboard">Dashboard</button>
-  <button routerLink="/list">My List</button>
-</div>-->
+<div id="nav" style="text-align: center">
+  <button mat-stroked-button="" [matMenuTriggerFor]="menu">
+    NAV
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/auth">Sign In/Log In</button>
+    <button mat-menu-item routerLink="/dashboard">Dashboard</button>
+    <button mat-menu-item routerLink="/list">List</button>
+    <button mat-menu-item routerLink="/settings">Settings</button>
+  </mat-menu>
+
+  <!--<button mat-stroked-button color="basic" routerLink="/auth">Sign In </button>-->
+  <!--<button mat-stroked-button color="basic" routerLink="/dashboard">Dashboard</button>-->
+  <!--<button mat-stroked-button color="basic" routerLink="/list">My List</button>-->
+</div>
 <router-outlet></router-outlet>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <div>
   <h2>Dish History</h2>
-  <mat-grid-list cols="3" rowHeight="1:1" gutterSize="3">
+  <mat-grid-list cols="6" rowHeight="1:1" gutterSize="3">
     <mat-grid-tile *ngFor="let dish of dishes">
       <div><div class="image-overlay">{{dish.location}}</div>
       <img title="{{dish.location}}" class="tile-image" src="../../../uploads/{{dish.path}}"/></div>

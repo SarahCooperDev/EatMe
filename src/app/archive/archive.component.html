@@ -6,6 +6,6 @@
     <button (click)="goToMenu()">Menu</button>
     <button (click)="logout()">Log Out</button>
   </div>
-  <app-image-upload></app-image-upload>
+  <app-image-upload (refresh)="imageUpdate()"></app-image-upload>
   <app-archive-images></app-archive-images>
 </div>
