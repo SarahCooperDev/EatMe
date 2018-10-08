@@ -8,7 +8,7 @@ import { UploadService } from '../services/upload.service';
 })
 export class ArchiveImagesComponent implements OnInit {
   dishes;
-  
+  errorMsg;
 
   constructor(private uploadService: UploadService, private ref: ChangeDetectorRef) { }
 
@@ -23,10 +23,13 @@ export class ArchiveImagesComponent implements OnInit {
 
       var data = (<any>result);
 
-      this.dishes = data.images;
-
-      console.log("Images are " + this.dishes);
-      this.ref.detectChanges();
+      if(data.images.length < 1){
+        this.errorMsg = "You haven't uploaded any dishes yet! Choose a file to get started"
+      } else {
+        this.dishes = data.images;
+        console.log("Images are " + this.dishes);
+      }
+      //this.ref.detectChanges();
     });
 
   }

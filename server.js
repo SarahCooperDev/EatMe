@@ -112,19 +112,11 @@ app.post("/api/login", function(req, res){
 });
 
 app.post("/api/authenticate", function(req, res){
-  console.log("In session Auth====================================================================");
-  console.log("Session ");
-  console.log(req.session.id);
-  console.log(req.session);
-  console.log("User ");
-  console.log(req.user.username);
-
   if(req.user){
-    res.send({'status': 200});
+    res.send({'status': 200, 'username': req.user.username});
   } else {
     res.send({'status': 501});
   }
-
 });
 
 app.get("/logout", function(req, res){
@@ -223,7 +215,7 @@ app.post('/api/eatenDishes', (req, res) => {
   User.findOne({username: req.user.username}).exec((err, user) =>{
     console.log("User is " + user);
 
-    return res.send({status: '200', images: user.images});
+    return res.send({status: '200', images: user.images.reverse()});
   });
 });
 
@@ -308,11 +300,13 @@ app.get("/api/friendsdishes", function(req, res){
       var dishes = [];
 
       friends.forEach(friend => {
-        dishes.push(friend.images);
+        friend.images.forEach(image => {
+          dishes.push(image);
+        })
       });
-      console.log("Dishes are");
-      console.log(dishes);
-      return res.send({status: '200', dishes: dishes});
+
+      dishes.sort(function(a, b){return a.dateAdded - b.dateAdded});
+      return res.send({status: '200', dishes: dishes.reverse()});
     });
   });
 });
@@ -339,7 +333,7 @@ app.get("/api/menu", function(req, res){
 
   User.findOne({username: req.user.username}).exec((err, user) =>{
     console.log("User is " + user);
-    return res.send({status: '200', menu: user.menu});
+    return res.send({status: '200', menu: user.menu.reverse()});
   });
 });
 

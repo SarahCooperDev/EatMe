@@ -9,6 +9,7 @@ import { DashboardService } from '../services/dashboard.service';
 export class DashImagesComponent implements OnInit {
 
   friendDishes;
+  errorMsg;
 
   constructor(private dashService: DashboardService) { }
 
@@ -17,9 +18,13 @@ export class DashImagesComponent implements OnInit {
       console.log("Done get dishes");
       var data = (<any>result);
 
-      this.friendDishes = data.dishes;
-
-      console.log("One example is " + this.friendDishes[0][0].path);
+      console.log("Length is " + data.dishes.length);
+      if(data.dishes.length < 1){
+        this.errorMsg = "You have no dishes to view! Try adding more friends";
+      } else {
+        this.friendDishes = data.dishes;
+        console.log("One example is " + this.friendDishes[0].path);
+      }
     });
   }
 
