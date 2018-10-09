@@ -1,19 +1,21 @@
 <div>
   <h2>Friends</h2>
-  <div>
-    <button (click)="goToDash()">Dashboard</button>
-    <button (click)="goToArchive()">Archive</button>
-    <button (click)="goToMenu()">Menu</button>
-    <button (click)="logout()">Log Out</button>
+  <div style="padding-bottom: 3%">
+    <button mat-raised-button="" (click)="goToDash()">Dashboard</button>
+    <button mat-raised-button="" (click)="goToArchive()">Archive</button>
+    <button mat-raised-button="" (click)="goToMenu()">Menu</button>
+    <button mat-raised-button="" (click)="logout()">Log Out</button>
   </div>
   <div>
     <form>
       <table>
         <tr>
-          <td><label>Search Username: </label></td><td><input [(ngModel)]="searchedUsername" name="searchedUsername" placeholder="username" type="text"></td>
-        </tr>
-        <tr>
-          <td><button (click)="addFriend()">GO</button></td>
+          <td>
+            <mat-form-field>
+              <input matInput="" [(ngModel)]="searchedUsername" name="searchedUsername" placeholder="Searh Username" type="text">
+            </mat-form-field>
+          </td>
+          <td><button mat-raised-button="" (click)="addFriend()">GO</button></td>
         </tr>
       </table>
     </form>

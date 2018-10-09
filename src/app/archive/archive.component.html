@@ -1,10 +1,10 @@
 <div>
   <h2>Your Dishes</h2>
   <div>
-    <button (click)="goToDash()">Dashboard</button>
-    <button (click)="goToFriends()">Friends</button>
-    <button (click)="goToMenu()">Menu</button>
-    <button (click)="logout()">Log Out</button>
+    <button mat-raised-button="" (click)="goToDash()">Dashboard</button>
+    <button mat-raised-button="" (click)="goToFriends()">Friends</button>
+    <button mat-raised-button="" (click)="goToMenu()">Menu</button>
+    <button mat-raised-button="" (click)="logout()">Log Out</button>
   </div>
   <app-image-upload (refresh)="imageUpdate()"></app-image-upload>
   <app-archive-images></app-archive-images>
