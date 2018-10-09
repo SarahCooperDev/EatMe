@@ -4,16 +4,20 @@
   <!-- TODO: add data for image: userid/username, id? -->
   <!-- TODO: add list for user, ownImage, listofOtherUsers, listofLikedPlaces/images. -->
   <input type="file" (change)="onFileChanged($event)">
+
   <form>
     <table>
       <tr>
         <td><label>Location: </label></td><td><input [(ngModel)]="location" name="loc" placeholder="location" type="text"></td>
       </tr>
       <tr>
-        <td></td><td><input type="file" (change)="onFileChanged($event)"></td>
+        <!--<td></td><td><input type="file" (change)="onFileChanged($event)"></td>-->
+        <td><input #file type="file" [hidden]="true" accept="image/*" (change)="onFileChanged($event)">
+          <button mat-raised-button #upload (click)="file.click($event)">Upload file</button></td>
+          <td>{{selectedFile.name}}</td>
       </tr>
       <tr>
-        <td></td><td><button (click)="onSubmit()">Upload</button></td>
+        <td></td><td><button (click)="onSubmit()" mat-raised-button>Upload</button></td>
       </tr>
     </table>
   </form>

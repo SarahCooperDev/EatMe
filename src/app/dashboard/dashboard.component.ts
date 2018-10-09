@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit {
   // placeName: string;
   // placeLocation: string;
   // placeRating: string;
+  username;
   constructor(private router: Router, private authService: AuthService, public dialog: MatDialog) {}
 
   ngOnInit() {
@@ -35,6 +36,8 @@ export class DashboardComponent implements OnInit {
 
       if(data.status != 200){
         this.router.navigateByUrl('/auth');
+      } else {
+        this.username = data.username;
       }
 
     });

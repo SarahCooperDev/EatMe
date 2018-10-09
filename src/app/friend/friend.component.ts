@@ -11,6 +11,7 @@ import { AuthService } from "../services/auth.service";
 export class FriendComponent implements OnInit {
   friends;
   searchedUsername;
+  errorMsg;
 
   constructor(private router: Router, private authService: AuthService, private friendService: FriendService) { }
 
@@ -28,9 +29,13 @@ export class FriendComponent implements OnInit {
           console.log(result);
     
           var data = (<any>result);
-          this.friends = data.friends;
-    
-          console.log("Friends are " + this.friends);
+          if(data.friends.length < 1){
+            this.errorMsg = "You haven't added any friends yet! Enter a username to get started";
+          } else {
+            this.friends = data.friends;
+            console.log("Friends are " + this.friends);
+
+          }
         });
       }
     });
@@ -39,6 +44,11 @@ export class FriendComponent implements OnInit {
   addFriend(){
     this.friendService.addFriend(this.searchedUsername).subscribe(result =>{
       console.log(result);
+
+      var data = (<any>result);
+      this.friends = data.friends;
+
+      console.log("Friends are " + this.friends);
     });
   }
 

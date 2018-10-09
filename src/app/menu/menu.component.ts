@@ -10,6 +10,7 @@ import { MenuService } from "../services/menu.service";
 })
 export class MenuComponent implements OnInit {
   dishes;
+  errorMsg;
 
   constructor(private router: Router, private authService: AuthService, private menuService: MenuService) { }
 
@@ -27,10 +28,14 @@ export class MenuComponent implements OnInit {
           console.log("Done get dishes");
           var data = (<any>result);
     
-          this.dishes = data.menu;
-          console.log(data.menu);
-    
-          console.log("One example is " + this.dishes[0].path);
+          if(data.menu.length < 1){
+            this.errorMsg = "You don't have any dishes on your menu! Click on your friends dishes in dashboard to get started";
+          } else {
+            this.dishes = data.menu;
+            console.log(data.menu);
+      
+            console.log("One example is " + this.dishes[0].path);
+          }
         });
       }
 
