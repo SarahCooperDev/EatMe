@@ -1,50 +1,54 @@
 <!-- TODO: check forms, add dashboard route, hide signin/register when dash shown. -->
 <!-- If user is not registered, show signin div -->
   <div *ngIf="!register" id="signin" style="padding-left: 15%">
-    <h3>Sign In</h3>
+    <h2>Sign In</h2>
+    <div style="padding-left: 3%">
     <p>{{errorMsg}}</p>
     <form>
       <table>
         <tr>
-          <td><label>Username: </label></td><td><input [(ngModel)]="user.username" name="inName" placeholder="name" type="text"></td>
+          <td>
+            <mat-form-field><input matInput="" [(ngModel)]="user.username" name="inName" placeholder="Username" type="text"></mat-form-field>
+          </td>
         </tr>
         <tr>
-          <td><label>Password: </label></td><td><input [(ngModel)]="user.password" name="inPassword" type="password"></td>
+          <td>
+            <mat-form-field><input matInput="" [(ngModel)]="user.password" name="inPassword" placeholder="Password" type="password"></mat-form-field>
+          </td>
         </tr>
         <tr>
-          <td><button (click)="loginUser()">GO</button></td>
-        </tr>
-        <tr>
-          <p (click)="toggleRegister()">Not a user? Click to register!</p>
+          <td><button mat-stroked-button=""  (click)="loginUser()">GO</button></td>
         </tr>
       </table>
     </form>
+    </div>
+    <p (click)="toggleRegister()">Not a user? Click to register!</p>
   </div>
 
 <!-- If user is registered, show singup div -->
   <div *ngIf="register" id="signup" style="padding-left: 15%">
-    <h3>Sign Up</h3>
+    <h2>Sign Up</h2>
+    <div style="padding-left: 3%">
     <p>{{errorMsg}}</p>
     <form>
     <table>
       <tr>
-        <td><label>Username: </label></td><td><input [(ngModel)]="user.username" name="inName" placeholder="name" type="text"></td>
+        <td><mat-form-field><input matInput="" [(ngModel)]="user.username" name="inName" placeholder="Username" type="text"></mat-form-field></td>
       </tr>
       <tr>
-        <td><label>Email: </label></td><td><input [(ngModel)]="user.email" name="inEmail" type="text" placeholder="email"></td>
+        <td><mat-form-field><input matInput=""[(ngModel)]="user.email" name="inEmail" type="text" placeholder="Email"></mat-form-field></td>
       </tr>
       <tr>
-        <td><label>Password: </label></td><td><input [(ngModel)]="user.password" name="inPassword" type="password"></td>
+        <td><mat-form-field><input matInput=""[(ngModel)]="user.password" name="inPassword" type="password" placeholder="Password"></mat-form-field></td>
       </tr>
       <tr>
-        <td><label>Country: </label></td><td><input [(ngModel)]="user.country" name="inCountry" type="text" placeholder="country"></td>
+        <td><mat-form-field><input matInput=""[(ngModel)]="user.country" name="inCountry" type="text" placeholder="Country"></mat-form-field></td>
       </tr>
       <tr>
-        <td><button (click)="registerUser()">GO</button></td>
-      </tr>
-      <tr>
-        <p (click)="toggleRegister()">Already a user? Click to sign in!</p>
+        <td><button mat-stroked-button="" (click)="registerUser()">GO</button></td>
       </tr>
     </table>
     </form>
+    </div>
+    <p (click)="toggleRegister()">Already a user? Click to sign in!</p>
   </div>

@@ -4,15 +4,15 @@
 <body class="mat-app-background">
 <div style="text-align:center">
   <mat-toolbar color="primary">
-    <h1>
+    <h1 style="text-align: center">
       Welcome to our website: {{ title }}!
     </h1>
   </mat-toolbar>
   <!--<button (click)="checkURL()">CHECK URL</button>-->
 </div>
-<div id="nav" style="text-align: center">
-  <button mat-stroked-button="" [matMenuTriggerFor]="menu">
-    NAV
+<div id="nav" style="text-align: center; position: center; padding: 10px">
+  <button mat-raised-button="" [matMenuTriggerFor]="menu" >
+    MAIN MENU
   </button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item routerLink="/auth">Sign In/Log In</button>
