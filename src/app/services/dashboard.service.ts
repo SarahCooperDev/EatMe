@@ -23,4 +23,12 @@ export class DashboardService {
     return this.http.get('http://localhost:8080/api/friendsdishes', this.httpOptions)
     .pipe(map(res => res));
   }
+
+  addFriendsDish(dish){
+    console.log("Adding friends dish");
+    console.log(dish.path);
+
+    return this.http.post('http://localhost:8080/api/addtomenu', {dish: dish}, this.httpOptions)
+    .pipe(map(res => res));
+  }
 }

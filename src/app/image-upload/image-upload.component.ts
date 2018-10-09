@@ -10,6 +10,7 @@ import { UploadService } from '../services/upload.service';
 })
 export class ImageUploadComponent implements OnInit {
   selectedFile: File;
+  location;
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -22,7 +23,11 @@ export class ImageUploadComponent implements OnInit {
 
   onFileChanged(event){
     this.selectedFile = event.target.files[0];
-    this.uploadService.uploadFile(this.selectedFile).subscribe(result =>{
+  }
+
+  onSubmit(){
+    console.log(this.location);
+    this.uploadService.uploadFile(this.selectedFile, this.location).subscribe(result =>{
       this.uploadService.getEatenDishes().subscribe(result => {
         console.log(result);
   
@@ -35,7 +40,6 @@ export class ImageUploadComponent implements OnInit {
   constructor(private uploadService: UploadService) { }
 
   ngOnInit() {
-    //this.uploadService.authenticate();
   }
 
 }

@@ -5,3 +5,10 @@
   <button (click)="goToFriends()">Friends</button>
   <button (click)="logout()">Log Out</button>
 </div>
+<h2>Be Our Guest</h2>
+<mat-grid-list cols="3" rowHeight="1:1" gutterSize="3">
+  <mat-grid-tile *ngFor="let dish of dishes">
+    <img class="tile-image" src="../../../uploads/{{dish.path}}"/>
+  </mat-grid-tile>
+</mat-grid-list>
+

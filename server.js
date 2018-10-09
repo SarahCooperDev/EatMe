@@ -196,20 +196,21 @@ let upload = multer({storage: storage});
  *
  */
 app.post('/api/upload', upload.single('dish'), (req, res) => {
-  console.log("In api/upload server");
 
-  console.log(req.session.id);
-  console.log(req.session);
+    console.log("In api/upload server");
 
-  User.findOne({username: req.user.username}).exec((err, user) =>{
-    console.log("User is " + user);
-    console.log("Location is " + req.body.location);
-    var newImage = {path: req.file.filename, dateAdded: Date.now(), location: req.body.location};
-    user.images.push(newImage);
-    user.save();
-    console.log("New user " + user);
-    return res.send({status: '200'});
-  });
+    console.log(req.session.id);
+    console.log(req.session);
+
+    User.findOne({username: req.user.username}).exec((err, user) =>{
+        console.log("User is " + user);
+        console.log("Location is " + req.body.location);
+        var newImage = {path: req.file.filename, dateAdded: Date.now(), location: req.body.location};
+        user.images.push(newImage);
+        user.save();
+        console.log("New user " + user);
+        return res.send({status: '200'});
+    });
 });
 
 app.post('/api/eatenDishes', (req, res) => {
@@ -351,6 +352,32 @@ app.get("/api/update", function(req, res){
     return res.send({status: 200});
   });
 });
+
+app.post("/api/addtomenu", function(req, res){
+    console.log("In adding to menu");
+    console.log("adding dish " + req.body.dish.path);
+
+    User.findOne({username: req.user.username}).exec((err, user) =>{
+
+        console.log("User is " + user);
+        var newDish = {path: req.body.dish.path, dateAdded: Date.now(), location: req.body.dish.location};
+        user.menu.push(newDish);
+        user.save();
+
+        console.log(user.menu);
+
+       return res.send({status: '200'});
+    });
+});
+
+app.get("/api/menu", function(req, res){
+    console.log("Retrieving menu");
+
+    User.findOne({username: req.user.username}).exec((err, user) =>{
+        console.log("User is " + user);
+        return res.send({status: '200', menu: user.menu});
+    });
+})
 
 app.listen(8080, function(){
   console.log('Example app listening on port 8080!');

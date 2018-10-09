@@ -4,4 +4,17 @@
   <!-- TODO: add data for image: userid/username, id? -->
   <!-- TODO: add list for user, ownImage, listofOtherUsers, listofLikedPlaces/images. -->
   <input type="file" (change)="onFileChanged($event)">
+  <form>
+    <table>
+      <tr>
+        <td><label>Location: </label></td><td><input [(ngModel)]="location" name="loc" placeholder="location" type="text"></td>
+      </tr>
+      <tr>
+        <td></td><td><input type="file" (change)="onFileChanged($event)"></td>
+      </tr>
+      <tr>
+        <td></td><td><button (click)="onSubmit()">Upload</button></td>
+      </tr>
+    </table>
+  </form>
 </div>

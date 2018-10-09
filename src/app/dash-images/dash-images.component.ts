@@ -23,4 +23,17 @@ export class DashImagesComponent implements OnInit {
     });
   }
 
+  addToMenu(toEat){
+    var dish = (<any>toEat);
+
+    console.log("In add to menu");
+    console.log("Dish is " + dish);
+    console.log("Dish path is " + dish.path);
+
+    this.dashService.addFriendsDish(dish).subscribe(res => {
+      console.log("Added dish");
+      console.log(res);
+    });
+  }
+
 }
