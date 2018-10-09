@@ -25,6 +25,7 @@ import { FriendComponent } from './friend/friend.component';
 import { DashImagesComponent } from './dash-images/dash-images.component';
 import {MatInputModule} from "@angular/material";
 import { MenuComponent } from './menu/menu.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { MenuComponent } from './menu/menu.component';
     MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,
+    MatToolbarModule,
   ],
   exports: [
     MatGridListModule,
