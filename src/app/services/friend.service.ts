@@ -20,7 +20,7 @@ export class FriendService {
 
   getFriends(){
     console.log("In get friends");
-    return this.http.get('http://'+HOSTURL+'calhost:8080/api/getFriends', this.httpOptions)
+    return this.http.get('http://'+HOSTURL+':8080/api/getFriends', this.httpOptions)
     .pipe(map(res => res));
   }
 
