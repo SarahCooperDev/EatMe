@@ -1,6 +1,7 @@
 <div>
   <h2>My Friends Dishes</h2>
-  <p>{{errorMsg}}</p>
+  <p>Click a dish to add to menu</p>
+  <p style="color: red">{{errorMsg}}</p>
   <mat-grid-list cols="3" rowHeight="1:1" gutterSize="3">
     <mat-grid-tile *ngFor="let dish of friendDishes">
       <div><div class="image-overlay">{{dish.location}}</div>

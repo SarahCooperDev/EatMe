@@ -3,7 +3,7 @@
   <div *ngIf="!register" id="signin" style="padding-left: 15%">
     <h2>Sign In</h2>
     <div style="padding-left: 3%">
-    <p>{{errorMsg}}</p>
+    <p style="color: red">{{errorMsg}}</p>
     <form>
       <table>
         <tr>
@@ -29,7 +29,7 @@
   <div *ngIf="register" id="signup" style="padding-left: 15%">
     <h2>Sign Up</h2>
     <div style="padding-left: 3%">
-    <p>{{errorMsg}}</p>
+    <p style="color: red;">{{errorMsg}}</p>
     <form>
     <table>
       <tr>
