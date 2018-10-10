@@ -10,13 +10,14 @@ import { Observable} from 'rxjs';
 //import 'rxjs/add/operator/map';
 import { map } from 'rxjs/operators';
 import { CATCH_ERROR_VAR } from '@angular/compiler/src/output/output_ast';
+import {HOSTURL} from "../env";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   // url of the api to create or update a user
-  saveuserURL = 'http://localhost:8080/api/saveuser';
+  saveuserURL = 'http://'+HOSTURL+':8080/api/saveuser';
 
   // Outlines the request header options
   httpOptions = {
@@ -41,7 +42,7 @@ export class AuthService {
     console.log(user);
 
     // Http call to the api, retrives an object from the server
-    return this.http.post('http://localhost:8080/api/saveuser', JSON.stringify({"user": user, "mode": "SAVE"}), this.httpOptions)
+    return this.http.post('http://'+HOSTURL+':8080/api/saveuser', JSON.stringify({"user": user, "mode": "SAVE"}), this.httpOptions)
       .pipe(map(res => res));
 
     //.pipe().subscribe();
@@ -69,13 +70,13 @@ export class AuthService {
 
     console.log(user.username);
     // Http call to the api, retrives an object from the server
-    var postResponse = this.http.post('http://localhost:8080/api/login', JSON.stringify({"username": user.username, "password": user.password}), this.httpOptions)
+    var postResponse = this.http.post('http://'+HOSTURL+':8080/api/login', JSON.stringify({"username": user.username, "password": user.password}), this.httpOptions)
       .pipe(map(res => res));
     return postResponse;
   }
 
   logout(){
-    return this.http.get('http://localhost:8080/logout', this.httpOptions).pipe(map(res => res));
+    return this.http.get('http://'+HOSTURL+':8080/logout', this.httpOptions).pipe(map(res => res));
   }
 
   checkAuth(){
@@ -85,7 +86,7 @@ export class AuthService {
     headers.append('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
 
     console.log("In Check Auth");
-    return this.http.post("http://localhost:8080/api/authenticate", '', this.httpOptions).pipe(map(res => res));
+    return this.http.post("http://"+HOSTURL+":8080/api/authenticate", '', this.httpOptions).pipe(map(res => res));
   }
 
   updateUserInfo(user: User, newName, newEmail, newPassword){
@@ -107,7 +108,7 @@ export class AuthService {
 
     console.log(user.username);
     // Http call to the api, retrives an object from the server
-    var postResponse = this.http.post('http://localhost:8080/api/update', this.httpOptions)
+    var postResponse = this.http.post('http://'+HOSTURL+':8080/api/update', this.httpOptions)
       .pipe(map(res => res));
     return postResponse;
   }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import {HOSTURL} from "../env";
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class DashboardService {
 
   getFriendDishes(){
     console.log("In dash service");
-    return this.http.get('http://localhost:8080/api/friendsdishes', this.httpOptions)
+    return this.http.get('http://'+HOSTURL+':8080/api/friendsdishes', this.httpOptions)
     .pipe(map(res => res));
   }
 
@@ -28,7 +29,7 @@ export class DashboardService {
     console.log("Adding friends dish");
     console.log(dish.path);
 
-    return this.http.post('http://localhost:8080/api/addtomenu', {dish: dish}, this.httpOptions)
+    return this.http.post('http://'+HOSTURL+':8080/api/addtomenu', {dish: dish}, this.httpOptions)
     .pipe(map(res => res));
   }
 }

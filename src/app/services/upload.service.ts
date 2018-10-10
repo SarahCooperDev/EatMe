@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import {HOSTURL} from "../env";
 
 
 @Injectable({
@@ -9,7 +10,7 @@ import { map } from 'rxjs/operators';
 export class UploadService {
 
   // url of the api to create or update a user
-  uploadURL = 'http://localhost:8080/api/upload';
+  uploadURL = 'http://'+HOSTURL+':8080/api/upload';
 
   // Outlines the request header options
   httpOptions = {
@@ -29,7 +30,7 @@ export class UploadService {
     const uploadData = new FormData();
     uploadData.append('dish', file, file.name);
     uploadData.append('location', location);
-    return this.http.post('http://localhost:8080/api/upload', uploadData, this.httpOptions)
+    return this.http.post('http://'+HOSTURL+':8080/api/upload', uploadData, this.httpOptions)
     .pipe(map(res => res));
   }
 
@@ -43,7 +44,7 @@ export class UploadService {
       withCredentials: true,
     };
 
-    this.http.post('http://localhost:8080/api/authenticate', {}, httpOptions).subscribe(event =>{
+    this.http.post('http://'+HOSTURL+':8080/api/authenticate', {}, httpOptions).subscribe(event =>{
       console.log(event);
     });
   }
@@ -58,7 +59,7 @@ export class UploadService {
       withCredentials: true,
     };
 
-    return this.http.post('http://localhost:8080/api/eatenDishes', {}, httpOptions)
+    return this.http.post('http://'+HOSTURL+':8080/api/eatenDishes', {}, httpOptions)
     .pipe(map(res => res));
   }
 }
