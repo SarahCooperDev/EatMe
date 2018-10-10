@@ -26,6 +26,7 @@ import { DashImagesComponent } from './dash-images/dash-images.component';
 import {MatInputModule} from "@angular/material";
 import { MenuComponent } from './menu/menu.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatCardModule} from '@angular/material/card';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     MatFormFieldModule,
     MatInputModule,
     MatToolbarModule,
+    MatCardModule,
   ],
   exports: [
     MatGridListModule,

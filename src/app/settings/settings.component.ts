@@ -18,23 +18,21 @@ export class SettingsComponent implements OnInit {
     this.user = new User;
   }
 
-  //ADDED: Overrides original user???
   updateUser(){
-    var username = document.getElementById("username").valueOf();
-    var email = document.getElementById("email").valueOf();
     var password = document.getElementById("password").valueOf();
 
     this.user.dateJoined = new Date();
 
-    this.authService.updateUserInfo(this.user, username, email, password).subscribe(result =>{
+    this.authService.updateUserInfo(this.user, password).subscribe(result =>{
       var data = (<any>result);
 
       if(data.status == 200){
         console.log("update = 200");
+        alert("Password updated!");
       } else {
         this.errorMsg = data.errorMsg;
+         alert(this.errorMsg);
       }
-
     });
   }
 }

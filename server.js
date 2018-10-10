@@ -43,7 +43,7 @@ app.use(session({
 }));
 
 app.use(function(req, res, next){
-  res.setHeader('Access-Control-Allow-Origin', 'http://'+HOSTURL+':4200');
+  res.setHeader('Access-Control-Allow-Origin', 'http://'+HOSTURL);
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', "Access-Control-Allow-Headers,Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,authorization,rbr");
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -345,8 +345,7 @@ app.get("/api/update", function(req, res){
   bcrypt.hash(req.body.newPassword, 10, function(err, hash) {
     req.body.newPassword = hash;
   });
-  User.updateOne({username: req.user.username}, {$set:{username: req.newUsername,
-      email: req.newEmail, password: req.newPassword}}, function(err, res){
+  User.updateOne({username: req.user.username}, {$set:{password: req.newPassword}}, function(err, res){
     if(err) console.log(err);
     console.log("user updated");
     return res.send({status: 200});

@@ -89,14 +89,12 @@ export class AuthService {
     return this.http.post("http://"+HOSTURL+":8080/api/authenticate", '', this.httpOptions).pipe(map(res => res));
   }
 
-  updateUserInfo(user: User, newName, newEmail, newPassword){
+  updateUserInfo(user: User, newPassword){
     console.log("Update user");
     console.log(user);
 
     let params = new HttpParams().set("username", user.username);
-    params.append("newUsername", newName);
     params.append("newPassword", newPassword);
-    params.append("newEmail", newEmail);
     params.append("someParamKey", user.username);
 
     //USE PASSWORD HASHING AND CHECKS.
