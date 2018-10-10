@@ -17,6 +17,7 @@ export class ArchiveImagesComponent implements OnInit {
   }
 
   getDishes(){
+    console.log("Dishes are " + this.dishes);
     console.log("Updating UI");
     this.uploadService.getEatenDishes().subscribe(result => {
       console.log(result);

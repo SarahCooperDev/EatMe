@@ -2,10 +2,15 @@
   <h2>My Friends Dishes</h2>
   <p>Click a dish to add to menu</p>
   <p style="color: red">{{errorMsg}}</p>
-  <mat-grid-list cols="3" rowHeight="1:1" gutterSize="3">
-    <mat-grid-tile *ngFor="let dish of friendDishes">
-      <div><div class="image-overlay">{{dish.location}}</div>
-      <img class="tile-image" (click)="addToMenu(dish)" src="../../../uploads/{{dish.path}}"/></div>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <div *ngIf="friendDishes !== undefined">
+    <mat-grid-list cols="3" rowHeight="1:1" gutterSize="3">
+      <mat-grid-tile *ngFor="let dish of friendDishes">
+        <div><div class="image-overlay">{{dish.location}}</div>
+        <img class="tile-image" (click)="addToMenu(dish)" src="../../../uploads/{{dish.path}}"/></div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <div *ngIf="friendDishes == undefined">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
 </div>

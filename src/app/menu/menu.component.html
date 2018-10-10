@@ -7,9 +7,14 @@
 </div>
 <h2>Be Our Guest</h2>
 <p style="color: red">{{errorMsg}}</p>
-<mat-grid-list cols="3" rowHeight="1:1" gutterSize="3">
-  <mat-grid-tile *ngFor="let dish of dishes">
-    <img class="tile-image" src="../../../uploads/{{dish.path}}"/>
-  </mat-grid-tile>
-</mat-grid-list>
+<div *ngIf="dishes !== undefined">
+  <mat-grid-list cols="3" rowHeight="1:1" gutterSize="3">
+    <mat-grid-tile *ngFor="let dish of dishes">
+      <img class="tile-image" src="../../../uploads/{{dish.path}}"/>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+<div *ngIf="dishes == undefined">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
 

@@ -1,7 +1,6 @@
 <div>
   <h2>Increase Deliciousness</h2>
-  <input type="file" (change)="onFileChanged($event)">
-
+  
   <form>
     <table>
       <tr>
@@ -11,7 +10,7 @@
         <!--<td></td><td><input type="file" (change)="onFileChanged($event)"></td>-->
         <td><input #file type="file" [hidden]="true" accept="image/*" (change)="onFileChanged($event)">
           <button mat-raised-button #upload (click)="file.click($event)">Upload file</button></td>
-          <td>{{selectedFile.name}}</td>
+          <td *ngIf="selectedFile">{{selectedFile.name}}</td>
       </tr>
       <tr>
         <td></td><td><button (click)="onSubmit()" mat-raised-button>Upload</button></td>
