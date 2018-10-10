@@ -10,11 +10,12 @@ import { MenuService } from "../services/menu.service";
 })
 export class MenuComponent implements OnInit {
   dishes;
-  errorMsg;
+  errorMsg = '';
 
   constructor(private router: Router, private authService: AuthService, private menuService: MenuService) { }
 
   ngOnInit() {
+    this.errorMsg = '';
     this.authService.checkAuth().subscribe(result => {
       console.log("In subscribe");
       var data = (<any>result);

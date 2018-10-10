@@ -139,43 +139,43 @@ app.get("/logout", function(req, res){
  */
 app.post('/api/saveuser', function(req, res){
   // If individual is a new user, create a new user in database, else
-  if(req.body.mode == "SAVE"){
-    bcrypt.hash(req.body.user.password, 10, function(err, hash){
-      req.body.user.password = hash;
-      var mod = new User(req.body.user);
+  User.findOne({username: req.body.user.username}).exec((err, user) =>{
+    if(err){
+      console.log("Error in checking for existing user " + err);
+      return res.send({'status': 500, 'errorMsg': "Internal Server Error"});
+    } else if(user){
+      return res.send({'status': 501, 'errorMsg': "User with this username already exists!"});
+    } else{
+      bcrypt.hash(req.body.user.password, 10, function(err, hash){
+        req.body.user.password = hash;
+        var newUser = new User(req.body.user);
 
-      mod.save(function(err, data){
-        if(err){
-          console.log("Error in saving user " + err);
-          res.send(err);
-        } else {
-          console.log("User created " + data);
-          passport.authenticate('local', function(status, user){
-            console.log("In authenticate " + data);
-            req.login(data, function(err){
-              console.log("Error in login");
-              console.log(err);
-              console.log(req.session.id);
-              console.log(req.session);
-              req.session.save(function(){
-                res.send({'status': 200});
+        newUser.save(function(err, data){
+          if(err){
+            console.log("Error in saving user " + err);
+            res.send({'status': 500, 'errorMsg': "Internal Server Error"});
+          } else {
+            console.log("User created " + data);
+            passport.authenticate('local', function(status, user){
+              console.log("In authenticate " + data);
+              req.login(data, function(err){
+                if(err){
+                  console.log("Error in login " + err);
+                  return res.send({'status': 502, 'errorMsg': "Error creating session"})
+                }
+
+                console.log(req.session.id);
+                console.log(req.session);
+                req.session.save(function(){
+                  res.send({'status': 200});
+                });
               });
-            });
-          })(req, res);
-        }
-      });
-    })
-  } else {
-    model.findByIdAndUpdate(req.body.id, {email: req.body.email, password: req.body.password, username: req.body.username},
-      function(err, data){
-        if(err){
-          res.send(err);
-        } else {
-          res.send({data: "Record has been updated.."});
-        }
-      }
-    );
-  }
+            })(req, res);
+          }
+        });
+      })
+    }
+  });
 });
 
 const DIR = './uploads';
@@ -195,12 +195,6 @@ let upload = multer({storage: storage});
  *
  */
 app.post('/api/upload', upload.single('dish'), (req, res) => {
-
-    console.log("In api/upload server");
-
-    console.log(req.session.id);
-    console.log(req.session);
-
     User.findOne({username: req.user.username}).exec((err, user) =>{
         console.log("User is " + user);
         console.log("Location is " + req.body.location);
@@ -261,9 +255,12 @@ app.get("/api/getFriends", function(req, res){
   console.log("Getting friends");
 
   User.findOne({username: req.user.username}).exec((err, user) =>{
-    console.log("User is " + user);
-
-    return res.send({status: '200', friends: user.friends});
+    if(err){
+      return res.send({status: '500', 'errorMsg': "Internal Server Error"});
+    } else {
+      console.log("User is " + user);
+      return res.send({status: '200', friends: user.friends.reverse()});
+    }
   });
 });
 
@@ -272,21 +269,35 @@ app.post("/api/addFriend", function(req, res){
   console.log(req.body.searched);
 
   User.findOne({username: req.user.username}).exec((err, user) =>{
-    console.log("User is " + user);
+    if(err){
+      return res.send({status: '500', 'errorMsg': "Internal Server Error"});
+    } else if(!user){
+      return res.send({status: '401', 'errorMsg': "Session error!"});
+    } else {
+      User.findOne({username: req.body.searched}).exec((err, friend) =>{
+        if(err){
+          return res.send({status: '500', 'errorMsg': "Internal Server Error"});
+        } else if(!friend){
+          return res.send({status: '404', 'errorMsg': "Searched username not found!"});
+        } else {
+          console.log("Friends is " + user.friends);
+          var isFriended = user.friends.find(function(f){
+            return f.username == friend.username;
+          });
+          console.log("Is friended " + isFriended);
+          if(isFriended){
+            return res.send({status: '404', 'errorMsg': "Your already added this friend"});
+          } else {
+            console.log("Friend is " + friend);
+            var friName = {_id: friend._id, username: friend.username};
+            user.friends.push(friName);
+            user.save();
 
-    User.findOne({username: req.body.searched}).exec((err, friend) =>{
-      console.log("Friend is " + friend);
-      if(!err){
-        var friName = {_id: friend._id, username: friend.username};
-        user.friends.push(friName);
-        user.save();
-      }
-
-      console.log("Friends");
-      console.log(user);
-
-      return res.send({status: '200', friends: user.friends});
-    });
+            return res.send({status: '200', friends: user.friends.reverse()});
+          }
+        }
+      });
+    }
   });
 });
 

@@ -10,7 +10,7 @@
       </mat-grid-tile>
     </mat-grid-list>
   </div>
-  <div *ngIf="friendDishes == undefined">
+  <div *ngIf="friendDishes == undefined && errorMsg == ''">
     <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
   </div>
 </div>

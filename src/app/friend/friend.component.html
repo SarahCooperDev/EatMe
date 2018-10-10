@@ -7,6 +7,8 @@
     <button mat-raised-button="" (click)="logout()">Log Out</button>
   </div>
   <div>
+    <p style="color: red">{{friendErrMsg}}</p>
+    <p style="color: green">{{successMsg}}</p>
     <form>
       <table>
         <tr>
@@ -23,13 +25,13 @@
   <h3>Your Foodie Buddies</h3>
   <p style="color: red">{{errorMsg}}</p>
   <div *ngIf="friends !== undefined">
-    <ul>
-      <li *ngFor="let friend of friends">
+    <mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let friend of friends">
         <span class="friend">{{friend.username}}</span>
-      </li>
-    </ul>
+      </mat-list-item>
+    </mat-list>
   </div>
-  <div *ngIf="friends == undefined">
+  <div *ngIf="friends == undefined && errorMsg == '' && friendErrMsg == ''">
     <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
   </div>
 </div>

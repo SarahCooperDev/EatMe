@@ -8,15 +8,17 @@ import { UploadService } from '../services/upload.service';
 })
 export class ArchiveImagesComponent implements OnInit {
   dishes;
-  errorMsg;
+  errorMsg = '';
 
   constructor(private uploadService: UploadService, private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.errorMsg = '';
     this.getDishes();
   }
 
   getDishes(){
+    this.errorMsg = '';
     console.log("Dishes are " + this.dishes);
     console.log("Updating UI");
     this.uploadService.getEatenDishes().subscribe(result => {
