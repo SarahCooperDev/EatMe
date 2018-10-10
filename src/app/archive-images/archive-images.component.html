@@ -4,8 +4,15 @@
   <div *ngIf="dishes !== undefined">
     <mat-grid-list cols="6" rowHeight="1:1" gutterSize="3">
       <mat-grid-tile *ngFor="let dish of dishes">
-        <div><div class="image-overlay">{{dish.location}}</div>
-        <img title="{{dish.location}}" class="tile-image" src="../../../uploads/{{dish.path}}"/></div>
+        <div class="image-tile">
+          <img title="{{dish.name}}" class="tile-image" src="../../../uploads/{{dish.path}}"/>
+          <div class="overlay">
+            <div class="image-overlay">
+              <div>{{dish.location}}</div>
+              <div>{{dish.name}}</div>
+            </div>
+          </div>
+        </div>
       </mat-grid-tile>
     </mat-grid-list>
   </div>

@@ -24,12 +24,13 @@ export class UploadService {
 
   constructor(private http: HttpClient) { }
 
-  uploadFile(file: File, location: string){
+  uploadFile(file: File, location: string, name: string){
     console.log("In service");
 
     const uploadData = new FormData();
     uploadData.append('dish', file, file.name);
     uploadData.append('location', location);
+    uploadData.append('name', name);
     return this.http.post('http://'+HOSTURL+':8080/api/upload', uploadData, this.httpOptions)
     .pipe(map(res => res));
   }

@@ -13,12 +13,12 @@ const multer = require('multer');
 const FileStore = require('session-file-store')(session);
 
 //var uri = "mongodb://ImmerSie:<atlascomp1!>@eatme-shard-00-00-q3a6r.mongodb.net:27017,eatme-shard-00-01-q3a6r.mongodb.net:27017,eatme-shard-00-02-q3a6r.mongodb.net:27017/test?ssl=true&replicaSet=eatme-shard-0&authSource=admin&retryWrites=true";
-var uri2 = "mongodb+srv://ImmerSie:atlascomp1!@eatme-q3a6r.mongodb.net/test?retryWrites=true";
-var db = mongo.connect(uri2, { useNewUrlParser: true },function(err, response){
+var uri = "mongodb+srv://ImmerSie:atlascomp1!@eatme-q3a6r.mongodb.net/test?retryWrites=true";
+var db = mongo.connect(uri, { useNewUrlParser: true },function(err, response){
   if(err){
     console.log(err);
   } else {
-    console.log("Connected to " + db, ' + ', response);
+    console.log("Connected to " + uri);
   }
 });
 
@@ -56,36 +56,25 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser(function(user, done) {
-  console.log("Serialize user " + user);
-  console.log(user);
   done(null, user);
 });
 
 passport.deserializeUser(function(user, done) {
-  console.log("In deserialize");
-  console.log(user);
   done(null, user);
 });
 
 
 passport.use(new LocalStrategy(function(username, password, done){
-  console.log("In local strategy");
   User.findOne({username: username}).exec((err, user) =>{
-    console.log("Hit body of login");
     if(err){
-      console.log("Error is " + err);
       return done("Internal error");
-    }
-    if(!user){
-      console.log("No user found  for " + username);
+    } else if(!user){
       return done("Username not found");
     } else {
       bcrypt.compare(password, user.password, function(err, result){
         if(result){
-          console.log("Result is " + result);
           return done(null, user);
         } else {
-          console.log("Password failed for " + user.password);
           return done("Password incorrect");
         }
       })
@@ -122,11 +111,7 @@ app.post("/api/authenticate", function(req, res){
 });
 
 app.get("/logout", function(req, res){
-  console.log("Loggin out user");
-  console.log(req.user.username);
-
   req.logout();
-
   res.send({'status': 200});
 });
 
@@ -138,10 +123,8 @@ app.get("/logout", function(req, res){
  * function - callback for route, containing the request and response of the call
  */
 app.post('/api/saveuser', function(req, res){
-  // If individual is a new user, create a new user in database, else
   User.findOne({username: req.body.user.username}).exec((err, user) =>{
     if(err){
-      console.log("Error in checking for existing user " + err);
       return res.send({'status': 500, 'errorMsg': "Internal Server Error"});
     } else if(user){
       return res.send({'status': 501, 'errorMsg': "User with this username already exists!"});
@@ -152,20 +135,13 @@ app.post('/api/saveuser', function(req, res){
 
         newUser.save(function(err, data){
           if(err){
-            console.log("Error in saving user " + err);
             res.send({'status': 500, 'errorMsg': "Internal Server Error"});
           } else {
-            console.log("User created " + data);
             passport.authenticate('local', function(status, user){
-              console.log("In authenticate " + data);
               req.login(data, function(err){
                 if(err){
-                  console.log("Error in login " + err);
                   return res.send({'status': 502, 'errorMsg': "Error creating session"})
                 }
-
-                console.log(req.session.id);
-                console.log(req.session);
                 req.session.save(function(){
                   res.send({'status': 200});
                 });
@@ -196,23 +172,29 @@ let upload = multer({storage: storage});
  */
 app.post('/api/upload', upload.single('dish'), (req, res) => {
     User.findOne({username: req.user.username}).exec((err, user) =>{
-        console.log("User is " + user);
-        console.log("Location is " + req.body.location);
-        var newImage = {path: req.file.filename, dateAdded: Date.now(), location: req.body.location};
+      if(err){
+        return res.send({status: '500', 'errorMsg': "Internal Server Error"});
+      } else if(!user){
+        return res.send({status: '501', 'errorMsg': "User not found!"});
+      } else {
+        var newImage = {path: req.file.filename, dateAdded: Date.now(), location: req.body.location, name: req.body.name};
         user.images.push(newImage);
         user.save();
-        console.log("New user " + user);
+
         return res.send({status: '200'});
+      }
     });
 });
 
 app.post('/api/eatenDishes', (req, res) => {
-  console.log("In Eaten");
-
   User.findOne({username: req.user.username}).exec((err, user) =>{
-    console.log("User is " + user);
-
-    return res.send({status: '200', images: user.images.reverse()});
+    if(err){
+      return res.send({status: '500', 'errorMsg': "Internal Server Error"});
+    } else if(!user){
+      return res.send({status: '501', 'errorMsg': "User not found!"});
+    } else {
+      return res.send({status: '200', images: user.images.reverse()});
+    }
   });
 });
 
@@ -252,22 +234,18 @@ app.get("/api/getUsers", function(req, res){
 });
 
 app.get("/api/getFriends", function(req, res){
-  console.log("Getting friends");
-
   User.findOne({username: req.user.username}).exec((err, user) =>{
     if(err){
       return res.send({status: '500', 'errorMsg': "Internal Server Error"});
+    } else if(!user){
+      return res.send({status: '401', 'errorMsg': "Session error!"});
     } else {
-      console.log("User is " + user);
       return res.send({status: '200', friends: user.friends.reverse()});
     }
   });
 });
 
 app.post("/api/addFriend", function(req, res){
-  console.log("Add friend");
-  console.log(req.body.searched);
-
   User.findOne({username: req.user.username}).exec((err, user) =>{
     if(err){
       return res.send({status: '500', 'errorMsg': "Internal Server Error"});
@@ -280,15 +258,13 @@ app.post("/api/addFriend", function(req, res){
         } else if(!friend){
           return res.send({status: '404', 'errorMsg': "Searched username not found!"});
         } else {
-          console.log("Friends is " + user.friends);
           var isFriended = user.friends.find(function(f){
             return f.username == friend.username;
           });
-          console.log("Is friended " + isFriended);
+
           if(isFriended){
             return res.send({status: '404', 'errorMsg': "Your already added this friend"});
           } else {
-            console.log("Friend is " + friend);
             var friName = {_id: friend._id, username: friend.username};
             user.friends.push(friName);
             user.save();
@@ -302,52 +278,60 @@ app.post("/api/addFriend", function(req, res){
 });
 
 app.get("/api/friendsdishes", function(req, res){
-  console.log("In friends dishes!");
-
   User.findOne({username: req.user.username}).exec((err, user) =>{
-    console.log("User is " + user);
+    if(err){
+      return res.send({status: '500', 'errorMsg': "Internal Server Error"});
+    } else if(!user){
+      return res.send({status: '401', 'errorMsg': "Session error!"});
+    } else {
+      User.find({'_id': {$in: user.friends}}, function(err, friends){
+        if(err){
+          return res.send({status: '500', 'errorMsg': "Internal Server Error"});
+        } else if(!friends){
+          return res.send({status: '401', 'errorMsg': "Error retrieving friends!"});
+        } else {
+          var dishes = [];
 
-    User.find({'_id': {$in: user.friends}}, function(err, friends){
-      console.log("Getting friends");
-      console.log(friends);
+          friends.forEach(friend => {
+            friend.images.forEach(image => {
+              dishes.push(image);
+            })
+          });
 
-      var dishes = [];
-
-      friends.forEach(friend => {
-        friend.images.forEach(image => {
-          dishes.push(image);
-        })
+          dishes.sort(function(a, b){return a.dateAdded - b.dateAdded});
+          return res.send({status: '200', dishes: dishes.reverse()});
+        }
       });
-
-      dishes.sort(function(a, b){return a.dateAdded - b.dateAdded});
-      return res.send({status: '200', dishes: dishes.reverse()});
-    });
+    }
   });
 });
 
 app.post("/api/addtomenu", function(req, res){
-  console.log("In adding to menu");
-  console.log("adding dish " + req.body.dish.path);
-
   User.findOne({username: req.user.username}).exec((err, user) =>{
+    if(err){
+      return res.send({status: '500', 'errorMsg': "Internal Server Error"});
+    } else if(!user){
+      return res.send({status: '401', 'errorMsg': "Session error!"});
+    } else {
+      var newDish = {path: req.body.dish.path, dateAdded: Date.now(), location: req.body.dish.location, name: req.body.dish.name};
+      user.menu.push(newDish);
+      user.save();
 
-    console.log("User is " + user);
-    var newDish = {path: req.body.dish.path, dateAdded: Date.now(), location: req.body.dish.location};
-    user.menu.push(newDish);
-    user.save();
-
-    console.log(user.menu);
-
-    return res.send({status: '200'});
+      return res.send({status: '200'});
+    }
   });
 });
 
 app.get("/api/menu", function(req, res){
-  console.log("Retrieving menu");
-
   User.findOne({username: req.user.username}).exec((err, user) =>{
-    console.log("User is " + user);
-    return res.send({status: '200', menu: user.menu.reverse()});
+    if(err){
+      return res.send({status: '500', 'errorMsg': "Internal Server Error"});
+    } else if(!user){
+      return res.send({status: '401', 'errorMsg': "Session error!"});
+    } else {
+      console.log("User is " + user);
+      return res.send({status: '200', menu: user.menu.reverse()});
+    }
   });
 });
 

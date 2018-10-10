@@ -11,6 +11,9 @@ import { UploadService } from '../services/upload.service';
 export class ImageUploadComponent implements OnInit {
   selectedFile: File;
   location;
+  name;
+  adding = false;
+  errorMsg = '';
   @Output() refresh = new EventEmitter<any>();
 
   httpOptions = {
@@ -28,16 +31,40 @@ export class ImageUploadComponent implements OnInit {
   }
 
   onSubmit(){
+    this.errorMsg = '';
     console.log(this.location);
-    this.uploadService.uploadFile(this.selectedFile, this.location).subscribe(result =>{
-      this.uploadService.getEatenDishes().subscribe(result => {
-        console.log(result);
-  
-        var data = (<any>result);
-        this.refresh.emit();
-        console.log("Emitted");
+    if(!this.location){
+      this.errorMsg = "Please enter a location";
+    } else if(!this.name){
+      this.errorMsg = "Please enter a name";
+    } else if(!this.selectedFile){
+      this.errorMsg = "Please enter a file";
+    } else {
+      this.uploadService.uploadFile(this.selectedFile, this.location, this.name).subscribe(result =>{
+        this.uploadService.getEatenDishes().subscribe(result => {
+          console.log(result);
+    
+          var data = (<any>result);
+
+          if(data.status == '200'){
+            this.refresh.emit();
+            console.log("Emitted");
+            this.adding = false;
+          } else {
+            this.errorMsg = data.errorMsg;
+          }
+        });
       });
-    });
+    }
+  }
+
+  showAdd(){
+    this.errorMsg = '';
+    if(this.adding == true){
+      this.adding = false;
+    } else {
+      this.adding = true;
+    }
   }
 
   constructor(private uploadService: UploadService) { }
