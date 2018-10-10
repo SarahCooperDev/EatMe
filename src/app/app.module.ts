@@ -27,6 +27,7 @@ import {MatInputModule} from "@angular/material";
 import { MenuComponent } from './menu/menu.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 
 @NgModule({
@@ -66,7 +67,7 @@ import {MatCardModule} from '@angular/material/card';
     MatGridListModule,
   ],
   entryComponents: [DashDialogComponent],
-  providers: [],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
