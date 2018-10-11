@@ -2,9 +2,11 @@
     width: 50%;
 }
 
+html{
+  background-color: #f4dcf1;
+
+}
 body{
     width: 100%;
     margin: 0;
-    background-color: #f4dcf1;
-
 }
