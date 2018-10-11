@@ -1,3 +1,15 @@
+<div id="nav" style="text-align: center; position: center; padding: 10px">
+  <button mat-raised-button="" [matMenuTriggerFor]="menu" >
+    MAIN MENU
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="goToDash()">Dashboard</button>
+    <button mat-menu-item (click)="goToFriends()">Friends</button>
+    <button mat-menu-item (click)="goToMenu()">Menu</button>
+    <button mat-menu-item routerLink="/settings">Settings</button>
+    <button mat-menu-item (click)="logout()">Sign Out</button>
+  </mat-menu>
+</div>
 <h2>Settings</h2>
 
 <p>Change your password by editing the password field and press ENTER</p>
