@@ -343,12 +343,17 @@ app.get("/api/update", function(req, res){
   console.log("updating user");
   bcrypt.hash(req.body.newPassword, 10, function(err, hash) {
     req.body.newPassword = hash;
+    User.updateOne({username: req.user.username}, {$set:{password: req.newPassword}}, function(err, res){
+      if(err) console.log(err);
+      console.log("user updated");
+      return res.send({status: 200});
+    });
   });
-  User.updateOne({username: req.user.username}, {$set:{password: req.newPassword}}, function(err, res){
-    if(err) console.log(err);
-    console.log("user updated");
-    return res.send({status: 200});
-  });
+  // User.updateOne({username: req.user.username}, {$set:{password: req.newPassword}}, function(err, res){
+  //   if(err) console.log(err);
+  //   console.log("user updated");
+  //   return res.send({status: 200});
+  // });
 });
 
 app.post("/api/addtomenu", function(req, res){
