@@ -1,4 +1,4 @@
-import {HOSTURL} from "./src/app/env";
+//import {HOSTURL} from "./src/app/env";
 
 var express = require('express');
 const session = require('express-session');
@@ -43,7 +43,7 @@ app.use(session({
 }));
 
 app.use(function(req, res, next){
-  res.setHeader('Access-Control-Allow-Origin', 'http://'+HOSTURL);
+  res.setHeader('Access-Control-Allow-Origin', 'http://http://13.211.135.245/');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', "Access-Control-Allow-Headers,Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,authorization,rbr");
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -178,6 +178,7 @@ app.post('/api/saveuser', function(req, res){
 });
 
 const DIR = './uploads';
+//const DIR = '/var/www/html/uploads';
 
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
