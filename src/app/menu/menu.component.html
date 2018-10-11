@@ -1,10 +1,16 @@
-<h2>Menu</h2>
-<div>
-  <button mat-raised-button="" (click)="goToDash()">Dashboard</button>
-  <button mat-raised-button="" (click)="goToArchive()">Archive</button>
-  <button mat-raised-button="" (click)="goToFriends()">Friends</button>
-  <button mat-raised-button="" (click)="logout()">Log Out</button>
+<div id="nav" style="text-align: center; position: center; padding: 10px">
+  <button mat-raised-button="" [matMenuTriggerFor]="menu" >
+    MAIN MENU
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="goToDash()">Dashboard</button>
+    <button mat-menu-item (click)="goToArchive()">Archives</button>
+    <button mat-menu-item (click)="goToFriends()">Friends</button>
+    <button mat-menu-item routerLink="/settings">Settings</button>
+    <button mat-menu-item (click)="logout()">Sign Out</button>
+  </mat-menu>
 </div>
+<h2>Menu</h2>
 <h2>Be Our Guest</h2>
 <p style="color: red">{{errorMsg}}</p>
 <div *ngIf="dishes !== undefined">
