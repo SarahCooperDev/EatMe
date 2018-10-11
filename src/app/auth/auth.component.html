@@ -1,6 +1,6 @@
 <!-- TODO: check forms, add dashboard route, hide signin/register when dash shown. -->
 <!-- If user is not registered, show signin div -->
-  <div *ngIf="!register" id="signin" style="padding-left: 15%">
+  <div *ngIf="!register" id="signin" style="padding-left: 15%; margin-top: 5%; padding-right: 15%; float: left">
     <h2>Sign In</h2>
     <div style="padding-left: 3%">
     <p style="color: red">{{errorMsg}}</p>
@@ -22,11 +22,11 @@
       </table>
     </form>
     </div>
-    <p (click)="toggleRegister()">Not a user? Click to register!</p>
+    <p (click)="toggleRegister()" class="switch-auth">Not a user? Click to register!</p>
   </div>
 
 <!-- If user is registered, show singup div -->
-  <div *ngIf="register" id="signup" style="padding-left: 15%">
+  <div *ngIf="register" id="signup" style="padding-left: 15%;margin-top: 5%; padding-right: 15%; float: left">
     <h2>Sign Up</h2>
     <div style="padding-left: 3%">
     <p style="color: red;">{{errorMsg}}</p>
@@ -50,5 +50,16 @@
     </table>
     </form>
     </div>
-    <p (click)="toggleRegister()">Already a user? Click to sign in!</p>
+    <p (click)="toggleRegister()" class="switch-auth">Already a user? Click to sign in!</p>
+  </div>
+
+  <div style="float: right; margin-right: 15%; margin-top: 5%; width: 35%; box-shadow: 5px 5px 5px">
+    <h2>What are we?</h2>
+    <p>Like eating food? Like looking at food? Always looking for new 
+      foods to eat? Look no further! <br> <br>
+      Eat Me is a place for lovers of food to come and share their delicious
+      exploits, and to find new places and foods to love. <br><br>
+      Join up, upload images of the foods you've consumed, add foodie friends,
+      and create the ultimate menu of potential dishes!
+    </p>
   </div>
