@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../models/user';
 import { AuthService } from '../services/auth.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-settings',
@@ -12,7 +13,7 @@ export class SettingsComponent implements OnInit {
   @Input() user: User;
   errorMsg = '';
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.user = new User;
@@ -35,4 +36,23 @@ export class SettingsComponent implements OnInit {
       }
     });
   }
+
+  goToDash(){
+    this.router.navigateByUrl('/dashboard');
+  }
+
+  goToFriends(){
+    this.router.navigateByUrl('/friends');
+  }
+
+  goToMenu(){
+    this.router.navigateByUrl('/menu');
+  }
+
+  logout(){
+    this.authService.logout().subscribe(res => {
+      this.router.navigateByUrl('/auth');
+    });
+  }
+
 }
