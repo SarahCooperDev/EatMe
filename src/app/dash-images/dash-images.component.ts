@@ -9,11 +9,14 @@ import { DashboardService } from '../services/dashboard.service';
 export class DashImagesComponent implements OnInit {
 
   friendDishes;
-  errorMsg;
+  errorMsg = '';
+  successMsg = '';
 
   constructor(private dashService: DashboardService) { }
 
   ngOnInit() {
+    this.errorMsg = '';
+    this.successMsg = '';
     this.dashService.getFriendDishes().subscribe(result => {
       console.log("Done get dishes");
       var data = (<any>result);
@@ -29,6 +32,8 @@ export class DashImagesComponent implements OnInit {
   }
 
   addToMenu(toEat){
+    this.errorMsg = '';
+    this.successMsg = '';
     var dish = (<any>toEat);
 
     console.log("In add to menu");
@@ -37,6 +42,7 @@ export class DashImagesComponent implements OnInit {
 
     this.dashService.addFriendsDish(dish).subscribe(res => {
       console.log("Added dish");
+      this.successMsg = "Added dish to menu!";
       console.log(res);
     });
   }

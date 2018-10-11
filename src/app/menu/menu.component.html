@@ -1,15 +1,34 @@
-<h2>Menu</h2>
-<div>
-  <button mat-raised-button="" (click)="goToDash()">Dashboard</button>
-  <button mat-raised-button="" (click)="goToArchive()">Archive</button>
-  <button mat-raised-button="" (click)="goToFriends()">Friends</button>
-  <button mat-raised-button="" (click)="logout()">Log Out</button>
+<div id="nav" style="text-align: center; position: center; padding: 10px">
+  <button mat-raised-button="" [matMenuTriggerFor]="menu" >
+    MAIN MENU
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="goToDash()">Dashboard</button>
+    <button mat-menu-item (click)="goToArchive()">Archives</button>
+    <button mat-menu-item (click)="goToFriends()">Friends</button>
+    <button mat-menu-item routerLink="/settings">Settings</button>
+    <button mat-menu-item (click)="logout()">Sign Out</button>
+  </mat-menu>
 </div>
+<h2>Menu</h2>
 <h2>Be Our Guest</h2>
 <p style="color: red">{{errorMsg}}</p>
-<mat-grid-list cols="3" rowHeight="1:1" gutterSize="3">
-  <mat-grid-tile *ngFor="let dish of dishes">
-    <img class="tile-image" src="../../../uploads/{{dish.path}}"/>
-  </mat-grid-tile>
-</mat-grid-list>
+<div *ngIf="dishes !== undefined">
+  <mat-grid-list cols="6" rowHeight="1:1" gutterSize="3">
+    <mat-grid-tile *ngFor="let dish of dishes">
+      <div class="image-tile">
+        <img title="{{dish.name}}" class="tile-image" src="../../../uploads/{{dish.path}}"/>
+        <div class="overlay">
+          <div class="image-overlay">
+            <div>{{dish.location}}</div>
+            <div>{{dish.name}}</div>
+          </div>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+<div *ngIf="dishes == undefined && errorMsg == ''">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
 

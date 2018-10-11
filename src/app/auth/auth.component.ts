@@ -45,31 +45,48 @@ export class AuthComponent implements OnInit {
    *  the server API
    */
   registerUser(){
-    this.user.dateJoined = new Date();
-    this.authService.registerUser(this.user).subscribe(result =>{
-      var data = (<any>result);
+    this.errorMsg = '';
+    if(!this.user.username){
+      this.errorMsg = "Please enter a username";
+    } else if(!this.user.email){
+      this.errorMsg = "Please enter a valid email";
+    } else if(!this.user.password){
+      this.errorMsg = "Please enter a valid password";
+    } else if(!this.user.country){
+      this.errorMsg = "Please enter your country";
+    } else {
+      this.user.dateJoined = new Date();
+      this.authService.registerUser(this.user).subscribe(result =>{
+        var data = (<any>result);
 
-      if(data.status == 200){
-        this.router.navigateByUrl('/dashboard');
-      } else {
-        this.errorMsg = data.errorMsg;
-      }
+        if(data.status == 200){
+          this.router.navigateByUrl('/dashboard');
+        } else {
+          this.errorMsg = data.errorMsg;
+        }
 
-    });
+      });
+    }
   }
 
   loginUser(){
-    console.log("Logging in user");
-    this.authService.loginUser(this.user).subscribe(result =>{
-      var data = (<any>result);
+    if(!this.user.username){
+      this.errorMsg = "Please enter your username";
+    } else if(!this.user.password){
+      this.errorMsg = "Please enter your password";
+    } else {
+      console.log("Logging in user");
+      this.authService.loginUser(this.user).subscribe(result =>{
+        var data = (<any>result);
 
-      console.log("Status is " + data.status);
-      
-      if(data.status == 200){
-        this.router.navigateByUrl('/dashboard');
-      } else {
-        this.errorMsg = data.errorMsg;
-      }
-    });
+        console.log("Status is " + data.status);
+        
+        if(data.status == 200){
+          this.router.navigateByUrl('/dashboard');
+        } else {
+          this.errorMsg = data.errorMsg;
+        }
+      });
+    }
   }
 }

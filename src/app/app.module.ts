@@ -13,6 +13,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from "@angular/material";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { DashDialogComponent } from './dash-dialog/dash-dialog.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
@@ -28,6 +29,7 @@ import { MenuComponent } from './menu/menu.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import {MatListModule} from '@angular/material/list';
 
 
 @NgModule({
@@ -62,6 +64,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     MatInputModule,
     MatToolbarModule,
     MatCardModule,
+    MatProgressSpinnerModule,
+    MatListModule
   ],
   exports: [
     MatGridListModule,

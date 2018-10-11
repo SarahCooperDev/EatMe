@@ -1,21 +1,28 @@
 <div>
-  <h2>Increase Deliciousness</h2>
-  <input type="file" (change)="onFileChanged($event)">
 
-  <form>
+  <div> 
+      <hr size="1" color="grey">
+    <button mat-raised-button="" (click)="showAdd()" *ngIf="!adding">Add</button>
+    <button mat-raised-button="" (click)="showAdd()" *ngIf="adding">Cancel</button>
+  </div>
+  <p style="color: red">{{errorMsg}}</p>
+  <form *ngIf="adding">
     <table>
       <tr>
-        <td><label>Location: </label></td><td><input [(ngModel)]="location" name="loc" placeholder="location" type="text"></td>
+        <td><mat-form-field><input matInput="" [(ngModel)]="location" name="loc" placeholder="location" type="text"> </mat-form-field></td>
       </tr>
       <tr>
-        <!--<td></td><td><input type="file" (change)="onFileChanged($event)"></td>-->
+        <td><mat-form-field><input matInput="" [(ngModel)]="name" name="name" placeholder="Name" type="text"> </mat-form-field></td>
+      </tr>
+      <tr>
         <td><input #file type="file" [hidden]="true" accept="image/*" (change)="onFileChanged($event)">
-          <button mat-raised-button #upload (click)="file.click($event)">Add file</button></td>
-          <td>{{selectedFile.name}}</td>
+          <button mat-raised-button #upload (click)="file.click($event)">Choose file</button>
+          <p *ngIf="selectedFile">{{selectedFile.name}}</p></td>
       </tr>
       <tr>
-        <td><button (click)="onSubmit()" mat-raised-button>Upload to Dishes</button></td>
+        <td><button (click)="onSubmit()" mat-raised-button>Upload</button></td>
       </tr>
     </table>
   </form>
+  <hr size="1" color="grey">
 </div>

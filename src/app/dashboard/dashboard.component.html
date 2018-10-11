@@ -1,10 +1,16 @@
+<div id="nav" style="text-align: center; position: center; padding: 10px">
+    <button mat-raised-button="" [matMenuTriggerFor]="menu" >
+      MAIN MENU
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="goToArchive()">Archive</button>
+      <button mat-menu-item (click)="goToFriends()">Friends</button>
+      <button mat-menu-item (click)="goToMenu()">Menu</button>
+      <button mat-menu-item routerLink="/settings">Settings</button>
+      <button mat-menu-item (click)="logout()">Sign Out</button>
+    </mat-menu>
 <h2>Dashboard</h2>
-<h3 style=" color: #490aff">{{username.toUpperCase()}}</h3>
-<div>
-  <button mat-raised-button="" (click)="goToArchive()">Archive</button>
-  <button mat-raised-button="" (click)="goToFriends()">Friends</button>
-  <button mat-raised-button="" (click)="goToMenu()">Menu</button>
-  <button mat-raised-button="" (click)="logout()">Log Out</button>
+<h3 style="color: #490aff" *ngIf="username">{{username.toUpperCase()}}</h3>
 </div>
 <div>
   <app-dash-images></app-dash-images>

@@ -1,12 +1,20 @@
 <div>
+    <div id="nav" style="text-align: center; position: center; padding: 10px">
+      <button mat-raised-button="" [matMenuTriggerFor]="menu" >
+        MAIN MENU
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="goToDash()">Dashboard</button>
+        <button mat-menu-item (click)="goToArchive()">Archives</button>
+        <button mat-menu-item (click)="goToMenu()">Menu</button>
+        <button mat-menu-item routerLink="/settings">Settings</button>
+        <button mat-menu-item (click)="logout()">Sign Out</button>
+      </mat-menu>
+    </div>
   <h2>Friends</h2>
-  <div style="padding-bottom: 3%">
-    <button mat-raised-button="" (click)="goToDash()">Dashboard</button>
-    <button mat-raised-button="" (click)="goToArchive()">Archive</button>
-    <button mat-raised-button="" (click)="goToMenu()">Menu</button>
-    <button mat-raised-button="" (click)="logout()">Log Out</button>
-  </div>
   <div>
+    <p style="color: red">{{friendErrMsg}}</p>
+    <p style="color: green">{{successMsg}}</p>
     <form>
       <table>
         <tr>
@@ -15,16 +23,21 @@
               <input matInput="" [(ngModel)]="searchedUsername" name="searchedUsername" placeholder="Searh Username" type="text">
             </mat-form-field>
           </td>
-          <td><button mat-raised-button="" (click)="addFriend()">GO</button></td>
+          <td><button mat-raised-button="" (click)="addFriend()">Add Friend</button></td>
         </tr>
       </table>
     </form>
   </div>
   <h3>Your Foodie Buddies</h3>
   <p style="color: red">{{errorMsg}}</p>
-  <ul>
-    <li *ngFor="let friend of friends">
-      <span class="friend">{{friend.username}}</span>
-    </li>
-  </ul>
+  <div *ngIf="friends !== undefined">
+    <mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let friend of friends">
+        <span class="friend">{{friend.username}}</span>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div *ngIf="friends == undefined && errorMsg == '' && friendErrMsg == ''">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
 </div>

@@ -8,30 +8,27 @@ import { UploadService } from '../services/upload.service';
 })
 export class ArchiveImagesComponent implements OnInit {
   dishes;
-  errorMsg;
+  errorMsg = '';
 
   constructor(private uploadService: UploadService, private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.errorMsg = '';
     this.getDishes();
   }
 
   getDishes(){
-    console.log("Updating UI");
+    this.errorMsg = '';
     this.uploadService.getEatenDishes().subscribe(result => {
-      console.log(result);
-
       var data = (<any>result);
 
-      if(data.images.length < 1){
+      if(data.status !== '200'){
+        this.errorMsg = data.errorMsg;
+      } else if(data.images.length < 1){
         this.errorMsg = "You haven't uploaded any dishes yet! Choose a file to get started"
       } else {
         this.dishes = data.images;
-        console.log("Images are " + this.dishes);
       }
-      //this.ref.detectChanges();
     });
-
   }
-
 }

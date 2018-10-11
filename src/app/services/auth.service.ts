@@ -42,7 +42,7 @@ export class AuthService {
     console.log(user);
 
     // Http call to the api, retrives an object from the server
-    return this.http.post('http://'+HOSTURL+':8080/api/saveuser', JSON.stringify({"user": user, "mode": "SAVE"}), this.httpOptions)
+    return this.http.post('http://'+HOSTURL+':8080/api/saveuser', JSON.stringify({"user": user}), this.httpOptions)
       .pipe(map(res => res));
 
     //.pipe().subscribe();
