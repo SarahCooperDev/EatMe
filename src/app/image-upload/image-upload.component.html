@@ -2,8 +2,8 @@
 
   <div> 
       <hr size="1" color="grey">
-    <button mat-raised-button="" (click)="showAdd()" *ngIf="!adding">Add</button>
-    <button mat-raised-button="" (click)="showAdd()" *ngIf="adding">Cancel</button>
+    <button mat-raised-button="" color="warn" (click)="showAdd()" *ngIf="!adding">Add</button>
+    <button mat-raised-button="" color="warn" (click)="showAdd()" *ngIf="adding">Cancel</button>
   </div>
   <p style="color: red">{{errorMsg}}</p>
   <form *ngIf="adding">
@@ -16,11 +16,11 @@
       </tr>
       <tr>
         <td><input #file type="file" [hidden]="true" accept="image/*" (change)="onFileChanged($event)">
-          <button mat-raised-button #upload (click)="file.click($event)">Choose file</button>
+          <button mat-raised-button  #upload (click)="file.click($event)" color="warn">Choose file</button>
           <p *ngIf="selectedFile">{{selectedFile.name}}</p></td>
       </tr>
       <tr>
-        <td><button (click)="onSubmit()" mat-raised-button>Upload</button></td>
+        <td><button (click)="onSubmit()" mat-raised-button color="warn" >Upload</button></td>
       </tr>
     </table>
   </form>
