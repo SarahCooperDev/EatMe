@@ -339,7 +339,7 @@ app.get("/api/menu", function(req, res){
 });
 
 //PLEASE CHECK :)
-app.get("/api/update", function(req, res){
+app.post("/api/update", function(req, res){
   console.log("updating user");
   bcrypt.hash(req.body.newPassword, 10, function(err, hash) {
     req.body.newPassword = hash;
