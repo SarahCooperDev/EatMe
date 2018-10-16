@@ -10,7 +10,11 @@ import { Observable} from 'rxjs';
 //import 'rxjs/add/operator/map';
 import { map } from 'rxjs/operators';
 import { CATCH_ERROR_VAR } from '@angular/compiler/src/output/output_ast';
-import {HOSTURL} from "../env";
+
+//import {HOSTURL} from "../env";
+
+// HOST URL from params??? == window.location.hostname;
+const HOSTURL = window.location.hostname;
 
 @Injectable({
   providedIn: 'root'

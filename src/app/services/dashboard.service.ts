@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import {HOSTURL} from "../env";
+
+//import {HOSTURL} from "../env";
+const HOSTURL = window.location.hostname;
 
 @Injectable({
   providedIn: 'root'

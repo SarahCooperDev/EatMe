@@ -13,6 +13,11 @@ const Word = require('./models/word');
 const multer = require('multer');
 const FileStore = require('session-file-store')(session);
 
+//origin header = 'http://13.211.135.245' // 'http://'+'localhost'+':4200'
+//const appOrigin = arg[2] (after node server.js)
+const appOrigin = process.argv[2] || 'localhost';
+const HOSTURL = 'http://'+appOrigin+':'+4200;
+
 //var uri = "mongodb://ImmerSie:<atlascomp1!>@eatme-shard-00-00-q3a6r.mongodb.net:27017,eatme-shard-00-01-q3a6r.mongodb.net:27017,eatme-shard-00-02-q3a6r.mongodb.net:27017/test?ssl=true&replicaSet=eatme-shard-0&authSource=admin&retryWrites=true";
 var uri = "mongodb+srv://ImmerSie:atlascomp1!@eatme-q3a6r.mongodb.net/test?retryWrites=true";
 var db = mongo.connect(uri, { useNewUrlParser: true },function(err, response){
@@ -45,7 +50,8 @@ app.use(session({
 }));
 
 app.use(function(req, res, next){
-  res.setHeader('Access-Control-Allow-Origin', 'http://13.211.135.245');
+  //res.setHeader('Access-Control-Allow-Origin', 'http://13.211.135.245');
+  res.setHeader('Access-Control-Allow-Origin', HOSTURL);
   //res.setHeader('Access-Control-Allow-Origin', 'http://'+'localhost'+':4200');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', "Access-Control-Allow-Headers,Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,authorization,rbr");
