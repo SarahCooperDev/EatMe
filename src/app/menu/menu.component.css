@@ -38,13 +38,3 @@
     background-color: #595959;
     color: #ffffff;
   }
-
-  #nav {
-    text-align: center; 
-    position: center; 
-    padding: 10px;
-  }
-
-  #errorp {
-      color: red;
-  }
