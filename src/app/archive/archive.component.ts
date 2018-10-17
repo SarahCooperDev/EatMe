@@ -47,6 +47,10 @@ export class ArchiveComponent implements OnInit {
     this.router.navigateByUrl('/menu');
   }
 
+  goToSettings(){
+    this.router.navigateByUrl('/settings');
+  }
+
   logout(){
     this.authService.logout().subscribe(res => {
       this.router.navigateByUrl('/auth');
