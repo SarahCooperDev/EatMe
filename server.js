@@ -46,7 +46,7 @@ app.use(session({
   saveUninitialized: true,
   store: new FileStore(),
   resave: false,
-  cookie : {secure: false, maxAge: 864000000, httpOnly: false },
+  cookie : {secure: false, maxAge: 60 * 60 * 24, httpOnly: false },
 }));
 
 app.use(function(req, res, next){
@@ -162,187 +162,13 @@ app.post('/api/saveuser', function(req, res){
   });
 });
 
-const DIR = './uploads';
-//const DIR = '/var/www/html/uploads';
+var friends = require('./routes/friends.routes');
+var menus = require('./routes/menu.routes');
+var archives = require('./routes/archive.routes');
 
-let storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, DIR);
-  },
-  filename: (req, file, cb) => {
-    console.log(file);
-    cb(null, file.fieldname + ' - ' + file.originalname + '-' + Date.now() + '.' + path.extname(file.originalname));
-  }
-});
-let upload = multer({storage: storage});
-
-/**
- *
- */
-app.post('/api/upload', upload.single('dish'), (req, res) => {
-    User.findOne({username: req.user.username}).exec((err, user) =>{
-      if(err){
-        return res.send({status: '500', 'errorMsg': "Internal Server Error"});
-      } else if(!user){
-        return res.send({status: '501', 'errorMsg': "User not found!"});
-      } else {
-        var newImage = {path: req.file.filename, dateAdded: Date.now(), location: req.body.location, name: req.body.name};
-        user.images.push(newImage);
-        user.save();
-
-        return res.send({status: '200'});
-      }
-    });
-});
-
-app.post('/api/eatenDishes', (req, res) => {
-  User.findOne({username: req.user.username}).exec((err, user) =>{
-    if(err){
-      return res.send({status: '500', 'errorMsg': "Internal Server Error"});
-    } else if(!user){
-      return res.send({status: '501', 'errorMsg': "User not found!"});
-    } else {
-      return res.send({status: '200', images: user.images.reverse()});
-    }
-  });
-});
-
-/*
- * Deletes a user from the database
- * 
- * @params
- * '' - url of the route
- * function - callback for route, containing the request and response of the call
- */
-app.post("/api/deleteUser", function(req, res){
-  model.remove({_id: req.body.id}, function(err){
-    if(err){
-      res.send(err);
-    } else {
-      res.send({data: "Record has been deleted.."});
-    }
-  })
-});
-
-/*
- * Retrieves all users from the database
- * 
- * @params
- * '' - url of the route
- * function - callback for route, containing the request and response of the call
- */
-app.get("/api/getUsers", function(req, res){
-  console.log("getting users");
-  model.find({}, function(err, data){
-    if(err){
-      res.send(err);
-    } else {
-      res.send(data);
-    }
-  });
-});
-
-app.get("/api/getFriends", function(req, res){
-  User.findOne({username: req.user.username}).exec((err, user) =>{
-    if(err){
-      return res.send({status: '500', 'errorMsg': "Internal Server Error"});
-    } else if(!user){
-      return res.send({status: '401', 'errorMsg': "Session error!"});
-    } else {
-      return res.send({status: '200', friends: user.friends.reverse()});
-    }
-  });
-});
-
-app.post("/api/addFriend", function(req, res){
-  User.findOne({username: req.user.username}).exec((err, user) =>{
-    if(err){
-      return res.send({status: '500', 'errorMsg': "Internal Server Error"});
-    } else if(!user){
-      return res.send({status: '401', 'errorMsg': "Session error!"});
-    } else {
-      User.findOne({username: req.body.searched}).exec((err, friend) =>{
-        if(err){
-          return res.send({status: '500', 'errorMsg': "Internal Server Error"});
-        } else if(!friend){
-          return res.send({status: '404', 'errorMsg': "Searched username not found!"});
-        } else {
-          var isFriended = user.friends.find(function(f){
-            return f.username == friend.username;
-          });
-
-          if(isFriended){
-            return res.send({status: '404', 'errorMsg': "Your already added this friend"});
-          } else {
-            var friName = {_id: friend._id, username: friend.username};
-            user.friends.push(friName);
-            user.save();
-
-            return res.send({status: '200', friends: user.friends.reverse()});
-          }
-        }
-      });
-    }
-  });
-});
-
-app.get("/api/friendsdishes", function(req, res){
-  User.findOne({username: req.user.username}).exec((err, user) =>{
-    if(err){
-      return res.send({status: '500', 'errorMsg': "Internal Server Error"});
-    } else if(!user){
-      return res.send({status: '401', 'errorMsg': "Session error!"});
-    } else {
-      User.find({'_id': {$in: user.friends}}, function(err, friends){
-        if(err){
-          return res.send({status: '500', 'errorMsg': "Internal Server Error"});
-        } else if(!friends){
-          return res.send({status: '401', 'errorMsg': "Error retrieving friends!"});
-        } else {
-          var dishes = [];
-
-          friends.forEach(friend => {
-            friend.images.forEach(image => {
-              dishes.push(image);
-            })
-          });
-
-          dishes.sort(function(a, b){return a.dateAdded - b.dateAdded});
-          return res.send({status: '200', dishes: dishes.reverse()});
-        }
-      });
-    }
-  });
-});
-
-app.post("/api/addtomenu", function(req, res){
-  User.findOne({username: req.user.username}).exec((err, user) =>{
-    if(err){
-      return res.send({status: '500', 'errorMsg': "Internal Server Error"});
-    } else if(!user){
-      return res.send({status: '401', 'errorMsg': "Session error!"});
-    } else {
-      var newDish = {path: req.body.dish.path, dateAdded: Date.now(), location: req.body.dish.location, name: req.body.dish.name};
-      user.menu.push(newDish);
-      user.save();
-
-      return res.send({status: '200'});
-    }
-  });
-});
-
-app.get("/api/menu", function(req, res){
-  User.findOne({username: req.user.username}).exec((err, user) =>{
-    if(err){
-      return res.send({status: '500', 'errorMsg': "Internal Server Error"});
-    } else if(!user){
-      return res.send({status: '401', 'errorMsg': "Session error!"});
-    } else {
-      console.log("User is " + user);
-      return res.send({status: '200', menu: user.menu.reverse()});
-    }
-  });
-});
+app.use('/api/friends', friends);
+app.use('/api/menu', menus);
+app.use('/api/archive', archives);
 
 app.get("/api/update", function(req, res){
   console.log("updating user");
@@ -355,32 +181,6 @@ app.get("/api/update", function(req, res){
     });
   });
 });
-
-app.post("/api/addtomenu", function(req, res){
-    console.log("In adding to menu");
-    console.log("adding dish " + req.body.dish.path);
-
-    User.findOne({username: req.user.username}).exec((err, user) =>{
-
-        console.log("User is " + user);
-        var newDish = {path: req.body.dish.path, dateAdded: Date.now(), location: req.body.dish.location};
-        user.menu.push(newDish);
-        user.save();
-
-        console.log(user.menu);
-
-       return res.send({status: '200'});
-    });
-});
-
-app.get("/api/menu", function(req, res){
-    console.log("Retrieving menu");
-
-    User.findOne({username: req.user.username}).exec((err, user) =>{
-        console.log("User is " + user);
-        return res.send({status: '200', menu: user.menu});
-    });
-})
 
 app.listen(8080, function(){
   console.log('Example app listening on port 8080!');

@@ -23,7 +23,7 @@ export class DashboardService {
 
   getFriendDishes(){
     console.log("In dash service");
-    return this.http.get('http://'+HOSTURL+':8080/api/friendsdishes', this.httpOptions)
+    return this.http.get('http://'+HOSTURL+':8080/api/friends/friendsdishes', this.httpOptions)
     .pipe(map(res => res));
   }
 
@@ -31,7 +31,7 @@ export class DashboardService {
     console.log("Adding friends dish");
     console.log(dish.path);
 
-    return this.http.post('http://'+HOSTURL+':8080/api/addtomenu', {dish: dish}, this.httpOptions)
+    return this.http.post('http://'+HOSTURL+':8080/api/menu/addtomenu', {dish: dish}, this.httpOptions)
     .pipe(map(res => res));
   }
 }

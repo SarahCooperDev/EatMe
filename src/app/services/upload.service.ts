@@ -32,7 +32,7 @@ export class UploadService {
     uploadData.append('dish', file, file.name);
     uploadData.append('location', location);
     uploadData.append('name', name);
-    return this.http.post('http://'+HOSTURL+':8080/api/upload', uploadData, this.httpOptions)
+    return this.http.post('http://'+HOSTURL+':8080/api/archive/upload', uploadData, this.httpOptions)
     .pipe(map(res => res));
   }
 
@@ -61,7 +61,7 @@ export class UploadService {
       withCredentials: true,
     };
 
-    return this.http.post('http://'+HOSTURL+':8080/api/eatenDishes', {}, httpOptions)
+    return this.http.get('http://'+HOSTURL+':8080/api/archive/eatenDishes', httpOptions)
     .pipe(map(res => res));
   }
 }

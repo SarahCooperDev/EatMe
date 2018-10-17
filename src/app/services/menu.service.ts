@@ -23,7 +23,7 @@ export class MenuService {
 
   getMenu(){
     console.log("In menu service");
-    return this.http.get('http://'+HOSTURL+':8080/api/menu', this.httpOptions)
+    return this.http.get('http://'+HOSTURL+':8080/api/menu/getMenu', this.httpOptions)
     .pipe(map(res => res));
   }
 }
