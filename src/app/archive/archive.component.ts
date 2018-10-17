@@ -35,22 +35,36 @@ export class ArchiveComponent implements OnInit {
     this.imagesComponent.getDishes();
   }
 
+  /**
+   * route to dashboard component
+   */
   goToDash(){
     this.router.navigateByUrl('/dashboard');
   }
-
+  /**
+   * route to friends component
+   */
   goToFriends(){
     this.router.navigateByUrl('/friends');
   }
 
+  /**
+   * route to menu component
+   */
   goToMenu(){
     this.router.navigateByUrl('/menu');
   }
 
+    /**
+   * route to settings component
+   */
   goToSettings(){
     this.router.navigateByUrl('/settings');
   }
 
+  /**
+   * logout user, and route to auth component
+   */
   logout(){
     this.authService.logout().subscribe(res => {
       this.router.navigateByUrl('/auth');

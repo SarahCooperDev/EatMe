@@ -37,18 +37,30 @@ export class SettingsComponent implements OnInit {
     });
   }
 
+  /**
+   * route to dashboard component
+   */  
   goToDash(){
     this.router.navigateByUrl('/dashboard');
   }
 
+  /**
+   * route to friends component
+   */  
   goToFriends(){
     this.router.navigateByUrl('/friends');
   }
 
+  /**
+   * route to menu component
+   */  
   goToMenu(){
     this.router.navigateByUrl('/menu');
   }
 
+  /**
+   * logout user and route to auth component
+   */
   logout(){
     this.authService.logout().subscribe(res => {
       this.router.navigateByUrl('/auth');

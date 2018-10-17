@@ -44,18 +44,30 @@ export class MenuComponent implements OnInit {
     });
   }
 
+  /**
+   * route to archive component
+   */
   goToArchive(){
     this.router.navigateByUrl('/archive');
   }
 
+  /**
+   * route to friends component
+   */  
   goToFriends(){
     this.router.navigateByUrl('/friends');
   }
 
+  /**
+   * route to dashboard component
+   */  
   goToDash(){
     this.router.navigateByUrl('/dashboard');
   }
 
+  /**
+   * logout user and route to auth component
+   */
   logout(){
     this.authService.logout().subscribe(res => {
       this.router.navigateByUrl('/auth');

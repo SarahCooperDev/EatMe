@@ -11,8 +11,6 @@ export class AppComponent {
 
   constructor(private router: Router) {
     this.checkURL();
-
-    //this.router.navigate(["/auth"]);
   }
 
   // logs the current URL of the page, for debugging purposes.

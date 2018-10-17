@@ -1,13 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from "@angular/router";
-//import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {MatDialog, MatDialogConfig} from "@angular/material";
-
-// export interface DialogData {
-//   placeName: string;
-//   placeLocation: string;
-//   placeRating: string;
-// }
 import { AuthService } from "../services/auth.service";
 
 @Component({
@@ -18,9 +11,6 @@ import { AuthService } from "../services/auth.service";
 
 export class DashboardComponent implements OnInit {
 
-  // placeName: string;
-  // placeLocation: string;
-  // placeRating: string;
   username;
   constructor(private router: Router, private authService: AuthService, public dialog: MatDialog) {}
 
@@ -42,18 +32,30 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  /**
+   * route to archive component
+   */
   goToArchive(){
     this.router.navigateByUrl('/archive');
   }
 
+  /**
+   * route to friends component
+   */
   goToFriends(){
     this.router.navigateByUrl('/friends');
   }
 
+  /**
+   * route to menu component
+   */
   goToMenu(){
     this.router.navigateByUrl('/menu');
   }
 
+  /**
+   * logout user and route to auth component
+   */
   logout(){
     this.authService.logout().subscribe(res => {
       this.router.navigateByUrl('/auth');
