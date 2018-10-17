@@ -1,3 +1,33 @@
 .switch-auth hover{
     color: #490aff;
 }
+
+#errorp {
+    color: red;
+}
+
+#authtable {
+    padding-left: 3%;
+}
+
+#signin {
+    padding-left: 15%; 
+    margin-top: 5%; 
+    padding-right: 15%; 
+    float: left;
+}
+
+#signup {
+    padding-left: 15%;
+    margin-top: 5%; 
+    padding-right: 15%; 
+    float: left;
+}
+
+#aboutpara {
+    float: right; 
+    margin-right: 15%; 
+    margin-top: 5%; 
+    width: 35%; 
+    box-shadow: 5px 5px 5px;
+}

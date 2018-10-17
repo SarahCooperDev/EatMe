@@ -1,6 +1,6 @@
 <div>
   <h2>Dish History</h2>
-  <p style="color: red">{{errorMsg}}</p>
+  <p id="errorp" >{{errorMsg}}</p>
   <div *ngIf="dishes !== undefined">
     <mat-grid-list cols="6" rowHeight="1:1" gutterSize="3">
       <mat-grid-tile *ngFor="let dish of dishes">

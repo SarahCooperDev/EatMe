@@ -1,4 +1,4 @@
-<div id="nav" style="text-align: center; position: center; padding: 10px">
+<div id="nav">
   <button mat-raised-button="" color="warn" [matMenuTriggerFor]="menu" >
     MAIN MENU
   </button>
@@ -12,7 +12,7 @@
 </div>
 <h2>Menu</h2>
 <h2>Be Our Guest</h2>
-<p style="color: red">{{errorMsg}}</p>
+<p id="errorp">{{errorMsg}}</p>
 <div *ngIf="dishes !== undefined">
   <mat-grid-list cols="6" rowHeight="1:1" gutterSize="3">
     <mat-grid-tile *ngFor="let dish of dishes">

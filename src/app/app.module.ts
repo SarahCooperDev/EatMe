@@ -14,7 +14,6 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from "@angular/material";
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { DashDialogComponent } from './dash-dialog/dash-dialog.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -40,7 +39,6 @@ import {MatListModule} from '@angular/material/list';
     SettingsComponent,
     ListComponent,
     PlaceDetailComponent,
-    DashDialogComponent,
     ArchiveComponent,
     ImageUploadComponent,
     ArchiveImagesComponent,
@@ -70,7 +68,6 @@ import {MatListModule} from '@angular/material/list';
   exports: [
     MatGridListModule,
   ],
-  entryComponents: [DashDialogComponent],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })

@@ -5,7 +5,7 @@
     <button mat-raised-button="" color="warn" (click)="showAdd()" *ngIf="!adding">Add</button>
     <button mat-raised-button="" color="warn" (click)="showAdd()" *ngIf="adding">Cancel</button>
   </div>
-  <p style="color: red">{{errorMsg}}</p>
+  <p id="errorp">{{errorMsg}}</p>
   <form *ngIf="adding">
     <table>
       <tr>

@@ -1,0 +1,11 @@
+#nav {
+    text-align: center; position: center; padding: 10px
+}
+
+#errorp {
+    color: red;
+}
+
+#successp {
+    color: green;
+}
