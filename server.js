@@ -56,11 +56,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser(function(user, done) {
-  done(null, user);
+  done(null, user._id);
 });
 
-passport.deserializeUser(function(user, done) {
-  done(null, user);
+passport.deserializeUser(function(userId, done) {
+  User.findOne().where('_id', userId).exec(function (err, user) {
+    done(err, user);
+   });
 });
 
 
