@@ -4,6 +4,7 @@
 
 // Import required models
 const User = require('../models/user');
+var {performance} = require('perf_hooks')
 
 /**
  * Retrieves all of a users friends
@@ -73,6 +74,8 @@ exports.addFriend = (req, res) => {
  * @param {HTTP response object} res 
  */
 exports.getFriendsDishes = (req, res) => {
+  var start = performance.now();
+  console.log("Performance " + start);
   // Get current user
   User.findOne({username: req.user.username}).exec((err, user) =>{
     if (err) {
@@ -82,25 +85,32 @@ exports.getFriendsDishes = (req, res) => {
     } else {
       // Get current users friends as database objects
       User.find({'_id': {$in: user.friends}}, function(err, friends){
-        if (err) {
+        if(err){
           return res.send({status: '500', 'errorMsg': "Internal Server Error"});
-        } else if (!friends) {
+        } else if(!friends){
           return res.send({status: '401', 'errorMsg': "Error retrieving friends!"});
         } else {
           var dishes = [];
 
-          // Get all of friends images
           friends.forEach(friend => {
-            friend.images.forEach(image => {
-              dishes.push(image);
-            })
+            //friend.images.forEach(image => {
+              //dishes.push(image);
+            //})
+            dishes = dishes.concat(friend.images);
           });
-
-          // Order by date
+          
           dishes.sort(function(a, b){return a.dateAdded - b.dateAdded});
+          var now = performance.now() - start;
+          console.log("To " + now);
           return res.send({status: '200', dishes: dishes.reverse()});
         }
       });
+      /*User.aggregate([{$project: {a: '$user.images'}}, {$unwind: '$a'}, {$group: {images: 'a', res:{$addToSet: '$a'}}}], function(err, images){
+        console.log("In aggregate");
+        console.log(images);
+        var dishes = [];
+        return res.send({status: '200', dishes: dishes});
+      });*/
     }
   });
 }

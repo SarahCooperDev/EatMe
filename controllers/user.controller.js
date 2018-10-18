@@ -54,35 +54,45 @@ exports.login = (req, res) => {
         return res.send({status: 500, errorMsg: 'Error with user serialization'});
       } else {
         req.session.save(function(){
-          return res.send({'status': 200});
+          return res.send({status: 200});
         });
       }
     });
   })(req, res);
 }
 
+/**
+ * Creates a new user
+ * 
+ * @param {HTTP request object} req 
+ * @param {HTTP response object} res 
+ */
 exports.register = (req, res) => {
   User.findOne({username: req.body.user.username}).exec((err, user) =>{
-    if(err){
-      return res.send({'status': 500, 'errorMsg': "Internal Server Error"});
-    } else if(user){
-      return res.send({'status': 501, 'errorMsg': "User with this username already exists!"});
-    } else{
+    if (err) {
+      return res.send({status: 500, errorMsg: 'Internal Server Error'});
+    } else if (user) {
+      return res.send({status: 501, errorMsg: 'User with this username already exists!'});
+    } else {
+      // Encrypt password
       bcrypt.hash(req.body.user.password, 10, function(err, hash){
         req.body.user.password = hash;
         var newUser = new User(req.body.user);
 
+        // Create new user in database
         newUser.save(function(err, data){
-          if(err){
-            res.send({'status': 500, 'errorMsg': "Internal Server Error"});
+          if (err) {
+            res.send({status: 500, errorMsg: 'Internal Server Error'});
           } else {
+            // Log new user in with passport
             passport.authenticate('local', function(status, user){
               req.login(data, function(err){
-                if(err){
-                  return res.send({'status': 502, 'errorMsg': "Error creating session"})
+                if (err) {
+                  return res.send({status: 502, errorMsg: 'Error creating session'})
                 }
+
                 req.session.save(function(){
-                  res.send({'status': 200});
+                  res.send({status: 200});
                 });
               });
             })(req, res);
@@ -93,6 +103,12 @@ exports.register = (req, res) => {
   });
 }
 
+/**
+ * Updates a users password
+ * 
+ * @param {HTTP request object} req 
+ * @param {HTTP response object} res 
+ */
 exports.update = (req, res) => {
   console.log("updating user");
   console.log(req.user);

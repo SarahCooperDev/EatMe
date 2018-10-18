@@ -2,9 +2,8 @@
  * Stores the user data in a schema, for MongoDB to use
  */
 
+// Imports required libraries
 const mongoose = require('mongoose');
-
-
 var Schema = mongoose.Schema;
 
 var UsersSchema = new Schema({

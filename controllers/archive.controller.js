@@ -2,27 +2,8 @@
  * Performs server-side actions related to the users images
  */
 
-// Import required models and libraries
+// Import required models
 const User = require('../models/user');
-const multer = require('multer');
-
-// Configuration for image 
-const DIR = './uploads';
-//const DIR = '/var/www/html/uploads';
-
-// Configures the location for the image storage
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, DIR);
-  },
-  filename: (req, file, cb) => {
-    console.log(file);
-    cb(null, file.fieldname + ' - ' + file.originalname + '-' + Date.now() + '.' + path.extname(file.originalname));
-  }
-});
-
-// Creates image upload function call
-const upload = multer({storage: storage});
 
 /**
  * Method for retrieving all images a user has uploaded
