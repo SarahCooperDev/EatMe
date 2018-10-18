@@ -46,12 +46,8 @@ export class AuthService {
     console.log(user);
 
     // Http call to the api, retrives an object from the server
-    return this.http.post('http://'+HOSTURL+':8080/api/saveuser', JSON.stringify({"user": user}), this.httpOptions)
+    return this.http.post('http://'+HOSTURL+':8080/api/user/register', JSON.stringify({"user": user}), this.httpOptions)
       .pipe(map(res => res));
-
-    //.pipe().subscribe();
-    //console.log(postResponse);
-
   }
 
   /*
@@ -74,13 +70,13 @@ export class AuthService {
 
     console.log(user.username);
     // Http call to the api, retrives an object from the server
-    var postResponse = this.http.post('http://'+HOSTURL+':8080/api/login', JSON.stringify({"username": user.username, "password": user.password}), this.httpOptions)
+    var postResponse = this.http.post('http://'+HOSTURL+':8080/api/user/login', JSON.stringify({"username": user.username, "password": user.password}), this.httpOptions)
       .pipe(map(res => res));
     return postResponse;
   }
 
   logout(){
-    return this.http.get('http://'+HOSTURL+':8080/logout', this.httpOptions).pipe(map(res => res));
+    return this.http.get('http://'+HOSTURL+':8080/api/user/logout', this.httpOptions).pipe(map(res => res));
   }
 
   checkAuth(){
@@ -90,7 +86,7 @@ export class AuthService {
     headers.append('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
 
     console.log("In Check Auth");
-    return this.http.post("http://"+HOSTURL+":8080/api/authenticate", '', this.httpOptions).pipe(map(res => res));
+    return this.http.post("http://"+HOSTURL+":8080/api/user/authenticate", '', this.httpOptions).pipe(map(res => res));
   }
 
   updateUserInfo(user: User, newPassword){
@@ -110,7 +106,7 @@ export class AuthService {
 
     console.log(user.username);
     // Http call to the api, retrives an object from the server
-    var postResponse = this.http.post('http://'+HOSTURL+':8080/api/update', this.httpOptions)
+    var postResponse = this.http.post('http://'+HOSTURL+':8080/api/user/update', this.httpOptions)
       .pipe(map(res => res));
     return postResponse;
   }
