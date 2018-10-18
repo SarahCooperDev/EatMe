@@ -1,15 +1,21 @@
+/*
+ * Provides the front end components with the methods to access the 
+ * friend-related api's
+ */
+
+// Import required models and libraries
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
-//import {HOSTURL} from "../env";
+// Current url to determine whether local or deployed (for api calls)
 const HOSTURL = window.location.hostname;
 
 @Injectable({
   providedIn: 'root'
 })
 export class FriendService {
-
+  // Outlines the request header options
   httpOptions = {
     headers: new HttpHeaders({
       'Authorization': 'my-auth-token',
@@ -20,15 +26,21 @@ export class FriendService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Method that calls the api to return a list of current users friends
+   */
   getFriends(){
-    console.log("In get friends");
     return this.http.get('http://'+HOSTURL+':8080/api/friends/getFriends', this.httpOptions)
     .pipe(map(res => res));
   }
 
+  /**
+   * Method that calls the api to add the searched username to the
+   * current users friend list, returning the new friend list 
+   * 
+   * @param searchedUsername Friend username current user is trying to add
+   */
   addFriend(searchedUsername: String){
-    console.log("IN add " + searchedUsername);
-
     return this.http.post('http://'+HOSTURL+':8080/api/friends/addFriend', {searched: searchedUsername}, this.httpOptions)
     .pipe(map(res=>res));
   }

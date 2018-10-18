@@ -14,11 +14,11 @@ const User = require('../models/user');
 exports.getEatenDishes = (req, res) => {
   User.findOne({username: req.user.username}).exec((err, user) =>{
     if (err) {
-      return res.send({status: '500', 'errorMsg': "Internal Server Error"});
+      return res.send({status: 500, errorMsg: 'Internal Server Error'});
     } else if (!user) {
-      return res.send({status: '501', 'errorMsg': "User not found!"});
+      return res.send({status: 501, errorMsg: 'User not found!'});
     } else {
-      return res.send({status: '200', images: user.images.reverse()});
+      return res.send({status: 200, images: user.images.reverse()});
     }
   });
 }
@@ -33,15 +33,15 @@ exports.getEatenDishes = (req, res) => {
 exports.upload = (req, res) => {
   User.findOne({username: req.user.username}).exec((err, user) =>{
     if (err) {
-      return res.send({status: '500', 'errorMsg': "Internal Server Error"});
+      return res.send({status: 500, errorMsg: 'Internal Server Error'});
     } else if (!user) {
-      return res.send({status: '501', 'errorMsg': "User not found!"});
+      return res.send({status: 501, errorMsg: 'User not found!'});
     } else {
       var newImage = {path: req.file.filename, dateAdded: Date.now(), location: req.body.location, name: req.body.name};
       user.images.push(newImage);
       user.save();
 
-      return res.send({status: '200'});
+      return res.send({status: 200});
     }
   });
 }

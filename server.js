@@ -1,6 +1,12 @@
 /**
  * Central server file, applies configurations 
  * (particularly passport and routing) and starts app
+ * 
+ * ./Controllers contains actions for api calls
+ * ./Routes contains routing to link URL's to controller actions
+ * ./Sessions contains non-expired user sessions
+ * ./src contains front-end code
+ * ./Uploads contains uploaded user images
  */
 
 // Import classes and libraries
@@ -15,9 +21,6 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const LocalStrategy = require('passport-local').Strategy;
 const FileStore = require('session-file-store')(session);
-
-//origin header = 'http://13.211.135.245' // 'http://'+'localhost'+':4200'
-//const appOrigin = arg[2] (after node server.js)
 
 // Configuration for local versus deployment
 const appOrigin = process.argv[2] || 'localhost';

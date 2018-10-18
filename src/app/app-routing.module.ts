@@ -1,12 +1,16 @@
+/**
+ * Set up routes for client side
+ */
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {AppComponent} from './app.component';
-import {DashboardComponent} from './dashboard/dashboard.component';
-import {AuthComponent} from './auth/auth.component';
-import {SettingsComponent} from "./settings/settings.component";
+import { AppComponent } from './app.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { AuthComponent } from './auth/auth.component';
+import { SettingsComponent } from "./settings/settings.component";
 import { ArchiveComponent } from './archive/archive.component';
 import { FriendComponent } from './friend/friend.component';
-import { MenuComponent} from './menu/menu.component';
+import { MenuComponent } from './menu/menu.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'auth', pathMatch: 'full'},

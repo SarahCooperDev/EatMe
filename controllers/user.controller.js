@@ -76,6 +76,10 @@ exports.register = (req, res) => {
     } else {
       // Encrypt password
       bcrypt.hash(req.body.user.password, 10, function(err, hash){
+        if (err) {
+          return res.send({status: 500, errorMsg: 'Internal Server Error'});
+        }
+        
         req.body.user.password = hash;
         var newUser = new User(req.body.user);
 
