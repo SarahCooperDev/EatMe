@@ -1,38 +1,64 @@
+/**
+ * Performs server-side actions related to the user
+ */
+
+// Import required models and libraries
 const User = require('../models/user');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 
+/**
+ * Logs user out, removing credentials from users request object
+ * 
+ * @param {HTTP request object} req 
+ * @param {HTTP response object} res 
+ */
 exports.logout = (req, res) => {
-    req.logout();
-    res.send({'status': 200});
+  req.logout();
+  res.send({status: 200});
 }
 
+/**
+ * Checks that a request has credentials attached
+ * 
+ * @param {HTTP request object} req 
+ * @param {HTTP response object} res 
+ */
 exports.authenticate = (req, res) => {
-    if(req.user){
-        res.send({'status': 200, 'username': req.user.username});
-    } else {
-        res.send({'status': 501});
-    }
+  if (req.user) {
+      res.send({status: 200, username: req.user.username});
+  } else {
+      res.send({status: 501});
+  }
 }
 
+/**
+ * Logs a user in, creating a session object and credentials
+ * 
+ * @param {HTTP request object} req 
+ * @param {HTTP response object} res 
+ */
 exports.login = (req, res) => {
-    passport.authenticate('local', function(status, user){
-        if(status == "Internal error"){
-          return res.send({'status': 500, 'errorMsg': status});
-        } else if(status == "Username not found" || status == "Password incorrect"){
-          return res.send({'status': 404, 'errorMsg': status});
-        }
-    
-        req.login(user, function(err){
-          if(err){
-            return res.send({'status': 500, 'errorMsg': "Error with user serialization"});
-          } else {
-            req.session.save(function(){
-              return res.send({'status': 200});
-            });
-          }
+  // Calls local strategy defined in server.js
+  passport.authenticate('local', function(status, user){
+    // Local strategy has failed
+    if (status === 'Internal error') {
+      return res.send({status: 500, errorMsg: status});
+    } else if (status === 'Username not found' || status === 'Password incorrect') {
+      return res.send({status: 404, errorMsg: status});
+    }
+
+    // Generate credentials with passport
+    req.login(user, function(err){
+      if (err) {
+        return res.send({status: 500, errorMsg: 'Error with user serialization'});
+      } else {
+        req.session.save(function(){
+          return res.send({'status': 200});
         });
-    })(req, res);
+      }
+    });
+  })(req, res);
 }
 
 exports.register = (req, res) => {
