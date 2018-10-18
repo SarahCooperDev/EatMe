@@ -1,3 +1,10 @@
+/*
+ * The container component for displaying the users friends images
+ * 
+ * Has parent dashboard
+ */
+
+// Import required models and libraries
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../services/dashboard.service';
 
@@ -6,44 +13,44 @@ import { DashboardService } from '../services/dashboard.service';
   templateUrl: './dash-images.component.html',
   styleUrls: ['./dash-images.component.css']
 })
-export class DashImagesComponent implements OnInit {
 
+export class DashImagesComponent implements OnInit {
   friendDishes;
   errorMsg = '';
   successMsg = '';
 
   constructor(private dashService: DashboardService) { }
 
+  /**
+   * Load in users friends dishes on page initialization
+   */
   ngOnInit() {
     this.errorMsg = '';
     this.successMsg = '';
+
     this.dashService.getFriendDishes().subscribe(result => {
-      console.log("Done get dishes");
       var data = (<any>result);
 
-      console.log("Length is " + data.dishes.length);
-      if(data.dishes.length < 1){
+      if (data.dishes.length < 1) {
         this.errorMsg = "You have no dishes to view! Try adding more friends";
       } else {
         this.friendDishes = data.dishes;
-        console.log("One example is " + this.friendDishes[0].path);
       }
     });
   }
 
+  /**
+   * When user clicks an image, add that image to their menu
+   * @param toEat The dish that has been clicked
+   */
   addToMenu(toEat){
     this.errorMsg = '';
     this.successMsg = '';
+
     var dish = (<any>toEat);
 
-    console.log("In add to menu");
-    console.log("Dish is " + dish);
-    console.log("Dish path is " + dish.path);
-
     this.dashService.addFriendsDish(dish).subscribe(res => {
-      console.log("Added dish");
       this.successMsg = "Added dish to menu!";
-      console.log(res);
     });
   }
 
