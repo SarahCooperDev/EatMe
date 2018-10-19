@@ -65,13 +65,6 @@ export class ArchiveComponent implements OnInit {
   }
 
   /**
-   * Route to settings component (Navigation handle)
-   */
-  goToSettings(){
-    this.router.navigateByUrl('/settings');
-  }
-
-  /**
    * Logout user, and route to auth component (Navigation handle)
    */
   logout(){

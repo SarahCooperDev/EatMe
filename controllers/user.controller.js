@@ -90,38 +90,25 @@ exports.register = (req, res) => {
           } else {
             // Log new user in with passport
             passport.authenticate('local', function(status, user){
-              req.login(data, function(err){
-                if (err) {
-                  return res.send({status: 502, errorMsg: 'Error creating session'})
-                }
+              if (status === 'Internal error') {
+                return res.send({status: 500, errorMsg: status});
+              } else if (status === 'Username not found' || status === 'Password incorrect') {
+                return res.send({status: 404, errorMsg: status});
+              } else {
+                req.login(data, function(err){
+                  if (err) {
+                    return res.send({status: 502, errorMsg: 'Error creating session'})
+                  }
 
-                req.session.save(function(){
-                  res.send({status: 200});
+                  req.session.save(function(){
+                    res.send({status: 200});
+                  });
                 });
-              });
+              }
             })(req, res);
           }
         });
       })
     }
-  });
-}
-
-/**
- * Updates a users password
- * 
- * @param {HTTP request object} req 
- * @param {HTTP response object} res 
- */
-exports.update = (req, res) => {
-  console.log("updating user");
-  console.log(req.user);
-  bcrypt.hash(req.body.newPassword, 10, function(err, hash) {
-    req.body.newPassword = hash;
-    User.updateOne({username: req.user.username}, {$set:{password: req.newPassword}}, function(err, res){
-      if(err) console.log(err);
-      console.log("user updated");
-      return res.send({status: 200});
-    });
   });
 }

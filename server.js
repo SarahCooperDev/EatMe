@@ -2,20 +2,20 @@
  * Central server file, applies configurations 
  * (particularly passport and routing) and starts app
  * 
- * ./Controllers contains actions for api calls
- * ./Routes contains routing to link URL's to controller actions
- * ./Sessions contains non-expired user sessions
+ * ./controllers contains actions for api calls
+ * ./routes contains routing to link URL's to controller actions
+ * ./sessions contains non-expired user sessions
  * ./src contains front-end code
- * ./Uploads contains uploaded user images
+ * ./uploads contains uploaded user images
  */
 
 // Import classes and libraries
-var express = require('express');
+const express = require('express');
 const session = require('express-session');
-var path = require('path');
-var bodyParser = require('body-parser');
-var mongo = require("mongoose");
-var bcrypt = require("bcrypt");
+const path = require('path');
+const bodyParser = require('body-parser');
+const mongo = require("mongoose");
+const bcrypt = require("bcrypt");
 const User = require('./models/user');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
@@ -52,7 +52,7 @@ app.use(session({
   saveUninitialized: true,
   store: new FileStore(),
   resave: false,
-  cookie : {secure: false, maxAge: 60 * 60 * 24, httpOnly: false },
+  cookie : {secure: false, maxAge: 1000 * 60 * 60 * 24, httpOnly: false },
 }));
 
 // Set up header variables to allow calls from client side

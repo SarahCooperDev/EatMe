@@ -64,21 +64,6 @@ export class AuthService {
     return this.http.post("http://"+HOSTURL+":8080/api/user/authenticate", '', this.httpOptions).pipe(map(res => res));
   }
 
-  /**
-   * Method to api that updates a users password
-   * 
-   * @param user current user
-   * @param newPassword the password to be saved to the database
-   */
-  updateUserInfo(user: User, newPassword){
-    let params = new HttpParams().set("username", user.username);
-    params.append("newPassword", newPassword);
-    params.append("someParamKey", user.username);
-
-    return this.http.post('http://'+HOSTURL+':8080/api/user/update', this.httpOptions)
-      .pipe(map(res => res));
-  }
-
   /*
    * Standardises error behaviour across the service
    * 
