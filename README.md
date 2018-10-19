@@ -4,8 +4,12 @@
 # Running EatMe 
 - Clone this repo
 - cd into the *EatMe* directory
+
 - run *node server.js* to run the server
-- also run *ng serve* to run the app
+- run *ng serve* to run the client
+OR
+- run *npm start* to run both
+
 - navigate to *localhost:4200* to access the website locally!
 
 # Server
