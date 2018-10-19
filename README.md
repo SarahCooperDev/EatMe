@@ -39,7 +39,7 @@ Other
 - services contains services to call api's
 
 # Misc
-- Database kept on Atlas
+- Database kept on MongoDB Atlas
 
 
 
