@@ -24,7 +24,7 @@ OR
 - server.js contains server configuration
 
 # Client (app)
-# Components
+Components
 - archive is /archive url
 - archive-images is child of archive
 - auth /auth url
@@ -34,9 +34,12 @@ OR
 - image-upload is child of archive
 - menu is /menu url
 
-# Other
+Other
 - models contains data structures
 - services contains services to call api's
+
+# Misc
+- Database kept on MongoDB Atlas
 
 
 
