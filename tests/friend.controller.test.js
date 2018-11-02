@@ -130,7 +130,6 @@ describe('Check get friends dishes functionality', function(){
         .get('/api/friends/friendsdishes')
         .send({
         }).then(res => {
-            console.log(res.body.dishes);
             var contains = false;
             if(res.body.dishes.some(d => d.location === 'restaurant' && d.name === 'Some cookie' )){
                 contains = true;
