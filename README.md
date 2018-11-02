@@ -38,6 +38,10 @@ Other
 - models contains data structures
 - services contains services to call api's
 
+# Tests
+- Built with Mocha, Chai and Chai-http
+- Run with *npm test*
+
 # Misc
 - Database kept on MongoDB Atlas
 
