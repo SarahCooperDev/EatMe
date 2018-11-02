@@ -3,6 +3,8 @@ const chaihttp = require('chai-http');
 const app = require('../server.js');
 const User = require('../models/user.js');
 var request = require('supertest');
+require("./archive.controller.test.js");
+
 
 chai.should();
 chai.use(chaihttp);
@@ -20,7 +22,7 @@ before(function(done){
     console.log("Before...");
     User.findOne({username: "admintest"}).exec((err, user) => {
         if(user){
-            console.log("Deleting " + user.username);
+            console.log("Deleting in before" + user.username);
             user.remove();
             done();
         } else {
@@ -34,7 +36,7 @@ after(function(done){
 
     console.log("After...");
     User.findOne({username: "admintest"}).exec((err, user) => {
-        console.log("Deleting " + user.username);
+        console.log("Deleting in user after " + user.username);
         user.remove();
         done();
     });
