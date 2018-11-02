@@ -13,6 +13,9 @@ var {performance} = require('perf_hooks')
  * @param {HTTP response object} res 
  */
 exports.getFriends = (req, res)=>{
+  if(!req.user){
+    return res.send({status: 501, errorMsg: 'User not logged in!'});
+  } 
   User.findOne({username: req.user.username}).exec((err, user) =>{
     if (err) {
       return res.send({status: 500, errorMsg: 'Internal Server Error'});
@@ -31,6 +34,10 @@ exports.getFriends = (req, res)=>{
  * @param {HTTP response object} res 
  */
 exports.addFriend = (req, res) => {
+  if(!req.user){
+    return res.send({status: 501, errorMsg: 'User not logged in!'});
+  } 
+
   // Get current user
   User.findOne({username: req.user.username}).exec((err, user) =>{
     if (err) {
@@ -74,6 +81,9 @@ exports.addFriend = (req, res) => {
  * @param {HTTP response object} res 
  */
 exports.getFriendsDishes = (req, res) => {
+  if(!req.user){
+    return res.send({status: 501, errorMsg: 'User not logged in!'});
+  } 
   // Get current user
   User.findOne({username: req.user.username}).exec((err, user) =>{
     if (err) {

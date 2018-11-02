@@ -3,7 +3,6 @@ const chaihttp = require('chai-http');
 const app = require('../server.js');
 const User = require('../models/user.js');
 var request = require('supertest');
-require("./archive.controller.test.js");
 
 
 chai.should();

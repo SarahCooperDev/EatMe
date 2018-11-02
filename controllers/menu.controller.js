@@ -12,6 +12,9 @@ const User = require('../models/user');
  * @param {HTTP response object} res 
  */
 exports.addToMenu = (req, res) => {
+  if(!req.user){
+    return res.send({status: 501, errorMsg: 'User not logged in!'});
+  } 
   User.findOne({username: req.user.username}).exec((err, user) =>{
     if (err) {
       return res.send({status: 500, errorMsg: 'Internal Server Error'});
@@ -35,6 +38,9 @@ exports.addToMenu = (req, res) => {
  * @param {HTTP response object} res 
  */
 exports.getMenu = (req, res) => {
+  if(!req.user){
+    return res.send({status: 501, errorMsg: 'User not logged in!'});
+  } 
   User.findOne({username: req.user.username}).exec((err, user) =>{
     if (err) {
       return res.send({status: 500, errorMsg: 'Internal Server Error'});
