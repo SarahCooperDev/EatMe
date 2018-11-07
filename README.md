@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 # EatMe
 
@@ -47,3 +48,7 @@ Other
 
 
 
+=======
+# EatMe
+A small social media website
+>>>>>>> f5ccf05012887f641c4ceb79b565f8f8367fe51a
