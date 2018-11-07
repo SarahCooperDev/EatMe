@@ -27,7 +27,7 @@ const appOrigin = process.argv[2] || 'localhost';
 const HOSTURL = 'http://'+appOrigin+':'+4200;
 
 // Setup remote database connection
-var uri = "mongodb+srv://ImmerSie:atlascomp1!@eatme-q3a6r.mongodb.net/test?retryWrites=true";
+var uri = "";
 var db = mongo.connect(uri, { useNewUrlParser: true },function(err, response){
   if(err){
     console.log(err);
